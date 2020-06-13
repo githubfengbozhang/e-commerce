@@ -1,0 +1,24 @@
+.lay-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .icon{
+    color: white;
+    .header-icon1{
+      font-size: 40px;
+    }
+    .header-icon{
+      font-size: 40px;
+    }
+  }
+  .title{
+    height: 76px;
+    line-height: 76px;
+    font-size: 30px;
+    font-family: MicrosoftYaHei, MicrosoftYaHei-Regular;
+    color: #e8eaec;
+    vertical-align: middle;
+    color: white;
+   
+  }
+}

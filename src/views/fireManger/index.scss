@@ -1,0 +1,171 @@
+.header{
+  height: 70px;
+  line-height: 70px;
+  font-size: 16px;
+  font-family: MicrosoftYaHei;
+  text-align: left;
+  color: #ffffff;
+  padding-left: 20px;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+    .table-box{
+      width: 1780px;
+      height: 332px;
+      background: rgba(61,95,207,0.2);
+      border: 1pt solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      box-shadow: 6px 6px 15px 0px rgba(106,151,255,0.2);
+      .name{
+        font-size: 18px;
+        font-family: Microsoft YaHei, Microsoft YaHei-Bold;
+        font-weight: 700;
+        text-align: left;
+        color: rgba(186,210,242,1);
+        margin: 20px 0 10px 24px;
+      }
+      .info{
+        margin: 0 0 20px 24px;
+        font-size: 16px;
+        font-family: Microsoft YaHei, Microsoft YaHei-Bold;
+        font-weight: 700;
+        text-align: left;
+        color: rgba(186,210,242,1);
+        .info-name{
+          vertical-align: super;
+        }
+        .number{
+          font-size: 44px;
+        }
+        .number1{
+          font-size: 44px;
+          color: rgba(186,210,242,1);
+        }
+        .space{
+          display: inline-block;;
+          width: 40px;
+        }
+        .normal{
+          vertical-align: super;
+          color: rgba(42,255,70,1);
+          padding: 0 10px;
+        }
+        .abnormal{
+          vertical-align: super;
+          color: rgba(255,113,42,1);
+          padding: 0 10px;
+        }
+        .alarm{
+          vertical-align: super;
+          color: rgba(255,42,42,1);
+          padding: 0 10px;
+        }
+      }
+    }
+    .table-list{
+      margin: 0 20px;
+    }
+    .circular{
+      width: 860px;
+      height: 342px;
+      background: rgba(61,95,207,0.2);
+      border: 1pt solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      box-shadow: 6px 6px 15px 0px rgba(106,151,255,0.2);
+      .name{
+        font-size: 18px;
+        font-family: Microsoft YaHei, Microsoft YaHei-Bold;
+        font-weight: 700;
+        text-align: left;
+        color: rgba(186,210,242,1);
+        margin: 20px 24px;
+      }
+      .info{
+        margin: 20px 0 0 24px;
+        font-size: 16px;
+        font-family: Microsoft YaHei, Microsoft YaHei-Bold;
+        font-weight: 700;
+        text-align: left;
+        color: rgba(186,210,242,1);
+        .info-name{
+          vertical-align: super;
+        }
+        .number{
+          font-size: 44px;
+        }
+        .number1{
+          font-size: 44px;
+          color: rgba(186,210,242,1);
+        }
+        .space{
+          display: inline-block;;
+          width: 40px;
+        }
+      }
+    }
+    .circular-fir-max{
+      margin-top: 20px;
+      width: 1780px;
+      height: 128px;
+      background: rgba(61,95,207,0.2);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 6px 6px 15px 0px rgba(106,151,255,0.2);
+      div{
+        margin: 20px 0 0 20px;
+      }
+      .name{
+        color:  #bad2f2;;
+        font-size: 18px;
+        font-family: Microsoft YaHei, Microsoft YaHei-Bold;
+        font-weight: 700;
+      }
+      .info{
+        margin-top: 10px;
+        color:  #bad2f2;;
+        font-size: 18px;
+        font-family: Microsoft YaHei, Microsoft YaHei-Bold;
+        font-weight: 700;
+        .info-name{
+          vertical-align: super;
+        }
+        .number,.number1,.number2{
+          font-size: 44px
+        }
+        .number2{
+          color: rgba(255,42,42,1);
+        }
+      }
+    }
+}
+.mt20{
+  margin-top: 20px;
+}
+.mt10{
+  margin-top: 10px !important;
+}
+.mt0{
+  margin-top: 0 !important;
+}
+// el-table样式修改
+.el-table td, .el-table th.is-leaf{
+  background: #243f99;
+  border: 1px solid #e9f0f5;
+  padding: 5px;
+}
+.el-table .oneline {
+  background: rgba(255,255,255,1);
+  height: 20px;
+}
+.el-table .twoline {
+  background: rgba(233,240,245,1);
+  height: 20px;
+}
+tbody .el-table__row{
+  td{
+    padding: 5px;
+  }
+}
