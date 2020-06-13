@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="access-maanger">
     <div class="header">
       <span>门禁管理 / 人员进出管理</span>
     </div>
@@ -28,36 +28,43 @@
       </div>
     </div>
     <div class="flex">
-      <div class="circular">
-        <div class="name">体温检测统计</div>
-        <div class="info">
-          <span class="info-name"> 体温正常：</span>
-          <span class="number">145</span>
-          <span>（人）</span>
-          <span class="space"></span>
-          <span class="info-name"> 体温异常：</span>
-          <span class="number1">4</span>
-          <span>（人）</span>
-        </div>
-        <div id="myChart3"
-             :style="{width: '860px', height: '230px'}">
-        </div>
-      </div>
-      <div class="circular">
-        <div class="name">人员进入统计</div>
-        <div class="info">
-          <span class="info-name"> 进入人数：</span>
-          <span class="number">145</span>
-          <span>（人）</span>
-          <span class="space"></span>
-          <span class="info-name"> 留存人数：</span>
-          <span class="number1">4</span>
-          <span>（人）</span>
-        </div>
-        <div id="myChart4"
-             :style="{width: '860px', height: '230px'}">
-        </div>
-      </div>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div class="circular">
+            <div class="name">体温检测统计</div>
+            <div class="info">
+              <span class="info-name"> 体温正常：</span>
+              <span class="number">145</span>
+              <span>（人）</span>
+              <span class="space"></span>
+              <span class="info-name"> 体温异常：</span>
+              <span class="number1">4</span>
+              <span>（人）</span>
+            </div>
+            <div id="myChart3"
+                 :style="{width: '100%', height:' 70%'}">
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="circular">
+            <div class="name">人员进入统计</div>
+            <div class="info">
+              <span class="info-name"> 进入人数：</span>
+              <span class="number">145</span>
+              <span>（人）</span>
+              <span class="space"></span>
+              <span class="info-name"> 留存人数：</span>
+              <span class="number1">4</span>
+              <span>（人）</span>
+            </div>
+            <div id="myChart4"
+                 :style="{width: '100%', height:' 70%'}">
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
     </div>
     <div class="flex mt20">
       <div class="access-table-box">
@@ -141,7 +148,11 @@ export default {
         b: '6',
         c: '9',
         d: '6'
-      }]
+      }],
+      otherObjct: {
+        chart2: '',
+        chart3: '',
+      }
     }
   },
   mounted () {
@@ -159,9 +170,9 @@ export default {
     //=============================echarts类====================================
     drawLine2 () {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById('myChart3'))
+      this.otherObjct.chart2 = this.$echarts.init(document.getElementById('myChart3'))
       // 绘制图表
-      myChart.setOption({
+      this.otherObjct.chart2.setOption({
         tooltip: {},
         grid: {
           top: "10%",
@@ -223,12 +234,13 @@ export default {
         }
         ]
       });
+      this.echartsResize()
     },
     drawLine3 () {
       // 基于准备好的dom，初始化echarts实例
-      let myChart = this.$echarts.init(document.getElementById('myChart4'))
+      this.otherObjct.chart3 = this.$echarts.init(document.getElementById('myChart4'))
       // 绘制图表
-      myChart.setOption({
+      this.otherObjct.chart3.setOption({
         tooltip: {},
         grid: {
           top: "10%",
@@ -316,10 +328,18 @@ export default {
         }
         ]
       });
+      this.echartsResize()
+    },
+    echartsResize () {
+      let that = this;
+      window.addEventListener("resize", function () {
+        that.otherObjct.chart2.resize();
+        that.otherObjct.chart3.resize();
+      })
     }
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "./index.scss";
 </style>

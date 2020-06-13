@@ -6,84 +6,96 @@
     <el-container style="background-color: #11246b;">
       <el-aside width="100px">
         <section>
-          <div class="silde">
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/'}">
             <router-link :to="{path: '/'}"
-                         @click.native="displayArticle()">
+                         @click.native="displayArticle('/')">
               <div>
                 <i class="iconfont">&#xe62c;</i>
               </div>
               <span class="iconname">首页</span>
             </router-link>
           </div>
-          <div class="silde">
-            <router-link :to="{path: '/fireManger'}">
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/fireManger'}">
+            <router-link :to="{path: '/fireManger'}"
+                         @click.native="displayArticle('/fireManger')">
               <div>
                 <i class="iconfont">&#xe630;</i>
               </div>
               <span class="iconname">消防管理</span>
             </router-link>
           </div>
-          <div class="silde">
-            <router-link :to="{path: ''}">
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/NotPage'}">
+            <router-link :to="{path: '/fireManger'}"
+                         @click.native="displayArticle('/NotPage')">
               <div>
                 <i class="iconfont">&#xe62d;</i>
               </div>
               <span class="iconname">视频监控</span>
             </router-link>
           </div>
-          <div class="silde">
-            <router-link :to="{path: ''}">
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/NotPage1'}">
+            <router-link :to="{path: ''}"
+                         @click.native="displayArticle('/NotPage1')">
               <div>
                 <i class="iconfont">&#xe62e;</i>
               </div>
               <span class="iconname">环保管理</span>
             </router-link>
           </div>
-          <div class="silde">
-            <router-link :to="{path: '/accessManger'}">
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/NotPage2'}">
+            <router-link :to="{path: ''}"
+                         @click.native="displayArticle('/NotPage2')">
+              <div>
+                <i class="iconfont">&#xe634;</i>
+              </div>
+              <span class="iconname">楼宇自控</span>
+            </router-link>
+          </div>
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/NotPage3'}">
+            <router-link :to="{path: ''}"
+                         @click.native="displayArticle('/NotPage3')">
+              <div>
+                <i class="iconfont">&#xe631;</i>
+              </div>
+              <span class="iconname">能耗监测</span>
+            </router-link>
+          </div>
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/NotPage4'}">
+            <router-link :to="{path: ''}"
+                         @click.native="displayArticle('/NotPage4')">
+              <div>
+                <i class="iconfont">&#xe631;</i>
+              </div>
+              <span class="iconname">停车管理</span>
+            </router-link>
+          </div>
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/accessManger'}">
+            <router-link :to="{path: '/accessManger'}"
+                         @click.native="displayArticle('/accessManger')">
               <div>
                 <i class="iconfont">&#xe633;</i>
               </div>
               <span class="iconname">门禁管理</span>
             </router-link>
           </div>
-          <!--
-            <router-link :to="{path: ''}">
-              <div>
-                <i class="iconfont">&#xe62d;</i>
-              </div>
-              <span>环保管理</span>
-            </router-link>
-            <router-link :to="{path: ''}">
-              <div>
-                <i class="iconfont">&#xe62e;</i>
-              </div>
-              <span>楼宇自控</span>
-            </router-link>
-            <router-link :to="{path: ''}">
-              <div>
-                <i class="iconfont">&#xe634;</i>
-              </div>
-              <span>能耗监测</span>
-            </router-link>
-            <router-link :to="{path: ''}">
-              <div>
-                <i class="iconfont">&#xe631;</i>
-              </div>
-              <span>停车管理</span>
-            </router-link>
-            <router-link :to="{path: ''}">
-              <div>
-                <i class="iconfont">&#xe62f;</i>
-              </div>
-              <span>门禁管理</span>
-            </router-link>
-            <router-link :to="{path: ''}">
+          <div class="silde"
+               :class="{'select-silde':selectItem ==='/NotPage5'}">
+            <router-link :to="{path: ''}"
+                         @click.native="displayArticle('/NotPage5')">>
               <div>
                 <i class="iconfont">&#xe632;</i>
               </div>
-              <span>智能照明</span>
-            </router-link> -->
+              <span class="iconname">智能照明</span>
+            </router-link>
+          </div>
         </section>
       </el-aside>
       <el-main>
@@ -113,6 +125,7 @@
 import { LayHeader } from './components'
 import variables from '@/styles/variables.scss'
 import { storage } from "../utils/constant"
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Layout',
@@ -122,8 +135,25 @@ export default {
     // AppMain
     LayHeader
   },
+  data () {
+    return {
+      selectItem: '/',
+    }
+  },
+  watch: {
+    selectMenu: {
+      immediate: true,
+      handler (newValue, oldValue) {
+        if (newValue !== oldValue) {
+          this.selectItem = newValue
+        }
+      }
+    }
+  },
   computed: {
-
+    ...mapGetters({
+      selectMenu: 'selectRouter'
+    }),
     variables () {
       return variables
     },
@@ -132,6 +162,7 @@ export default {
       let list = []
       const routePath = this.$route.matched[1].path;
       const route = JSON.parse(localStorage.getItem(storage.ROUTEMATCH))
+      console.log(route)
       for (let i = 0; i < route.length; i++) {
         const item = route[i]
         const path = item.path
@@ -144,8 +175,15 @@ export default {
     }
   },
   methods: {
-    displayArticle () {
-      alert(1312)
+    ...mapActions({
+      selectRouter: 'router/select_router'
+    }),
+    /** 
+     * 选中的菜单项
+    */
+    displayArticle (item) {
+      this.selectItem = item;
+      this.selectRouter(item)
     }
   }
 }
@@ -201,8 +239,13 @@ export default {
     padding-left: 20px;
   }
 }
+.select-silde {
+  background: radial-gradient(#477ce7, #223d92) !important;
+  border: 1px solid #68b4ff;
+  box-shadow: 3px 3px 6px 0px rgba(50, 111, 252, 0.73);
+}
 .silde {
-  width: 100px;
+  width: 98px;
   height: 100px;
   text-align: center;
   background: #11246b;

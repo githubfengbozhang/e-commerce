@@ -9,6 +9,11 @@ import element from 'element-ui';
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
+const speed = sessionStorage.getItem('ISC-VIDEO-RUN-PTZ-SPEED')
+if (!speed) {
+  sessionStorage.setItem('ISC-VIDEO-RUN-PTZ-SPEED', 1)
+}
+
 import './assets/iconfont/iconfont.css'
 
 import '@/icons' // icon
