@@ -1,0 +1,101 @@
+.app-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  -webkit-box-flex: 1;
+  align-items: center;
+
+  .spacer {
+    -webkit-box-flex: 1 !important;
+    flex-grow: 1 !important;
+  }
+}
+@for $i from 0 through 100 {
+  .ma-#{$i} {
+    margin: $i + px !important;
+  }
+  .mt-#{$i} {
+    margin-top: $i + px !important;
+  }
+  .mb-#{$i} {
+    margin-bottom: $i + px !important;
+  }
+  .ml-#{$i} {
+    margin-left: $i + px !important;
+  }
+  .mr-#{$i} {
+    margin-right: $i + px !important;
+  }
+  .mx-#{$i} {
+    margin-left: $i + px !important;
+    margin-right: $i + px !important;
+  }
+  .my-#{$i} {
+    margin-top: $i + px !important;
+    margin-bottom: $i + px !important;
+  }
+
+  .pa-#{$i} {
+    padding: $i + px !important;
+  }
+  .pt-#{$i} {
+    padding-top: $i + px !important;
+  }
+  .pb-#{$i} {
+    padding-bottom: $i + px !important;
+  }
+  .pl-#{$i} {
+    padding-left: $i + px !important;
+  }
+  .pr-#{$i} {
+    padding-right: $i + px !important;
+  }
+  .px-#{$i} {
+    padding-left: $i + px !important;
+    padding-right: $i + px !important;
+  }
+  .py-#{$i} {
+    padding-top: $i + px !important;
+    padding-bottom: $i + px !important;
+  }
+
+  .fz-#{$i} {
+    font-size: $i + px !important;
+  }
+}
+
+.danger--text {
+  color: #fe694a !important;
+}
+#tripod-head-setter {
+  input::-webkit-input-placeholder{
+    color: #646464;
+  }
+  .el-input__inner {
+    background-color: transparent!important;
+    background-image: none;
+    border-radius: 2px;
+    border: 1px solid #646464;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, .65);
+    display: inline-block;
+    font-size: inherit;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 12px;
+    -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    width: 100%;
+    caret-color: #f1f2f7;
+  }
+}
+
+.el-tooltip.material-icons {
+  outline: none;
+}
+.material-icons {
+  color: #909399;
+  user-select: none;
+  font-size: 20px;
+}

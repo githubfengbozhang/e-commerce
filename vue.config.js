@@ -31,6 +31,12 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+      '/iscvideo/http-flv/': {
+        target: 'http://10.20.2.207:38080',
+        changeOrigin: true
+      },
+    },
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

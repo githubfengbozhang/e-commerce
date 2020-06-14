@@ -19,7 +19,7 @@
           <span class="number2">4</span>
           <span>（个）</span>
         </div>
-
+       
       </div>
     </div>
     <div class="flex">
@@ -111,10 +111,13 @@
   </div>
 </template>
 <script>
+
+
 export default {
   name: 'dashboard',
   data () {
     return {
+     
       tableData: [{
         date: 'C1',
         name: '131312',

@@ -52,10 +52,7 @@
           <div class="mt0"><span class="open">开：5</span><span class="close">关：1</span></div>
         </div>
         <div class="vide">
-          <div>
-            <div></div>
-            <div class="text">位置一</div>
-          </div>
+          <DialogVideo />
         </div>
       </div>
     </div>
@@ -100,8 +97,13 @@
   </div>
 </template>
 <script>
+import DialogVideo from "../../components/DialogVideo/index.vue"
+
 export default {
   name: 'dashboard',
+  components:{
+    DialogVideo
+  },
   data () {
     return {}
   },

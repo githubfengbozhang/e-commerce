@@ -1,0 +1,66 @@
+$vm_base : 1600;
+@function vw($px) {
+  @return ($px / $vm_base) * 100vw;
+}
+
+.mrt-10{
+  margin-top: 10px;
+}
+.mrr-5{
+  margin-right: 5px;
+}
+.mrb-2 {
+  margin-bottom: 2px;
+}
+.mrb-4 {
+  margin-bottom: 4px;
+}
+.mrb-6 {
+  margin-bottom: 6px;
+}
+.mrb-10 {
+  margin-bottom: 10px;
+}
+.mrb-12 {
+  margin-bottom: 12px;
+}
+.mrb-20 {
+  margin-bottom: 20px;
+}
+.mrb-30 {
+  margin-bottom: 30px;
+}
+.mrl-6{
+  margin-left: 6px;
+}
+
+.clear:after{
+  content:"";
+  display:block;
+  clear: both;
+}
+
+.chart-title {
+  font-size: 14px;
+  color: #f1f2f7;
+}
+
+
+.time-2{
+  transition: all 0.2s;
+}
+.time-4{
+  transition: all 0.4s;
+}
+.time-6{
+  transition: all 0.6s;
+}
+.time-8{
+  transition: all 0.8s;
+}
+.time-10{
+  transition: all 1s;
+}
+.time-12{
+  transition: all 1.2s;
+}

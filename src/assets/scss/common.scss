@@ -1,0 +1,12 @@
+$main-color: #1e2e52;
+$bg-color-blue: #f1f2f7;
+$font-color-black: #17233d;
+@mixin laboratory-device-border($color) {
+  border: $color 1px solid;  
+}
+@mixin laboratory-device-color($color) {
+  color: $color;  
+}
+@mixin laboratory-device-bgColor($color) {
+  background-color: $color;  
+}

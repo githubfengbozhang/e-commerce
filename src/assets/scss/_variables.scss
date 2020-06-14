@@ -1,0 +1,42 @@
+// 背景色
+$app-background-color: #eef3f9;
+
+// 功能色
+$app-primary-color: #00b2f8; // 主要深色
+$app-primary-light: #e4f7ff; // 主要浅色
+$app-warning-color: #ffba00; // 警告深色
+$app-warning-light: #fffaec; // 警告浅色
+$app-danger-color: #fe694a; // 危险深色
+$app-danger-light: #fff0ed; // 危险浅色
+$app-success-color: #00d38d; // 成功深色
+$app-success-light: #eafff8; // 成功浅色
+
+// 文本
+$app-text-1-color: #384660; // 主要文本色
+$app-text-2-color: #909399; // 次级文本色
+$app-text-3-color: #cfcfcf; // 文本不可用色
+
+// 灰度
+$app-grey-1-color: #2a2a2a; // 黑灰色：控制台、视频窗口等背景
+$app-grey-2-color: #405a79; // 重灰色：导航高亮色
+$app-grey-3-color: #4f6a8a; // 深灰色：导航主色
+$app-grey-4-color: #909399; // 灰色：不可用按钮边框色
+$app-grey-5-color: #cfcfcf; // 浅灰色：可用输入框边框，占位符，不可用按钮主色
+$app-grey-6-color: #ebecef; // 淡灰色：正文边框，不可用输入框边框色
+$app-grey-7-color: #f5f7fa; // 白灰色：表单背景
+
+// 宽度
+$app-body-width: 1280px; // 主体区域最小宽度
+$app-aside-width: 200px; // 侧边栏区域宽度
+$app-main-width: $app-body-width - $app-aside-width; // 主要区域宽度
+
+// 高度
+$app-height-small: 28px; // 表单次级高度
+$app-height-base: 36px; // 表单基本高度
+
+// 间隔
+$app-offset-xsmall: 8px; // 超小间距：输入框与提示文本的间距
+$app-offset-small: 16px; // 小间距：输入框与字段的间距
+$app-offset-base: 24px; // 基本间距：对话框内容的内间距
+$app-offset-large: 32px; // 大间距：表单元件的间距
+$app-offset-xlarge: 40px; // 超大间距：对话框正文上边距

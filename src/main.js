@@ -5,7 +5,7 @@ import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
 // import element from './plugins/element'
 import element from 'element-ui';
-
+import '@/utils/flv.js'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
