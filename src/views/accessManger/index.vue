@@ -75,105 +75,105 @@
                     :cell-class-name="changeCellStyle">
             <el-table-column prop="date"
                              label="序号"
+                             type="index"
                              width="180">
+                             <template  slot-scope="scope">
+                               {{(params.currentPage-1)*params.pageSize + scope.$index+1}}
+                             </template>
             </el-table-column>
-            <el-table-column prop="name"
+            <el-table-column prop="image"
                              label="相片"
                              width="180">
+              <template slot-scope="scope">
+                <img :src="scope.image"/>
+              </template>
             </el-table-column>
-            <el-table-column prop="address"
+            <el-table-column prop="perName"
                              label="姓名">
             </el-table-column>
-            <el-table-column prop="a"
+            <el-table-column prop="certificateNumber"
                              label="身份">
             </el-table-column>
-            <el-table-column prop="b"
-                             label="状态">
+            <el-table-column prop="status"
+                             label="状态"
+                             :formatter="formatterStatus">
             </el-table-column>
             <el-table-column prop="c"
                              label="留存时间">
             </el-table-column>
-            <el-table-column prop="d"
+            <el-table-column prop="dataTime"
                              label="时间">
             </el-table-column>
           </el-table>
         </div>
         <el-pagination background
-                       @size-change="handleSizeChange"
                        @current-change="handleCurrentChange"
-                       :current-page="currentPage4"
-                       :page-sizes="[100, 200, 300, 400]"
-                       :page-size="100"
+                       :current-page="params.currentPage"
+                       :page-sizes="[5]"
+                       :page-size="params.pageSize"
                        layout="total, prev, pager, next, jumper"
-                       :total="400">
+                       :total="otherObjct.total">
         </el-pagination>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { todayFaceQuery } from "../../api/accessManger"
+import { todayFaceQuery,faceQuery,hisFaceTempDateQuery } from "../../api/accessManger"
 
 export default {
   name: 'dashboard',
   data () {
     return {
-      tableData: [{
-        date: 'C1',
-        name: '131312',
-        address: '231',
-        a: '4',
-        b: '6',
-        c: '9',
-        d: '6'
-      }, {
-        date: 'C1',
-        name: '131312',
-        address: '231',
-        a: '4',
-        b: '6',
-        c: '9',
-        d: '6'
-      }, {
-        date: 'C1',
-        name: '131312',
-        address: '231',
-        a: '4',
-        b: '6',
-        c: '9',
-        d: '6'
-      }, {
-        date: 'C1',
-        name: '131312',
-        address: '231',
-        a: '4',
-        b: '6',
-        c: '9',
-        d: '6'
-      }],
+      tableData: [],
       otherObjct: {
         chart2: '',
         chart3: '',
+        total:0
       },
       personObject: {
         clockPersonnum: '', clockPersonTempnum: '', clockPersonAbtempnum: ''
+      },
+      params:{
+        currentPage:1,
+        pageSize:5
       }
     }
   },
   mounted () {
     this.personStatistics();
+    this.loadDataList();
     this.drawLine2();
     this.drawLine3();
+    this.hisFaceTempDateQuery()
   },
   methods: {
     //==================================接口请求===============================
     personStatistics () {
       let that = this;
       todayFaceQuery().then((res) => {
-        const { clockPersonnum, clockPersonTempnum, clockPersonAbtempnum } = res
+        const { clockPersonnum, clockPersonTempnum, clockPersonAbtempnum } = res.data
         that.personObject.clockPersonnum = clockPersonnum;
         that.personObject.clockPersonTempnum = clockPersonTempnum;
         that.personObject.clockPersonAbtempnum = clockPersonAbtempnum;
+      })
+    },
+    loadDataList(){
+      let that = this;
+      faceQuery(that.params).then((res) => {
+        debugger
+         that.tableData = res.data.records;
+         that.otherObjct.total= res.total
+      })
+    },
+    hisFaceTempDateQuery(){
+       let time = new Date()
+      let year = time.getFullYear()
+      let month = time.getMonth() + 1 > 9 ? (time.getMonth() + 1) : `0${time.getMonth() + 1}`
+      let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`
+      const dataStar= `${year}-${month}-${day}`
+      faceQuery({dataStar}).then((res) => {
+      //  res.data.records
       })
     },
     changeCellStyle ({ rowIndex }) {
@@ -182,6 +182,9 @@ export default {
       } else {
         return 'twoline'
       }
+    },
+    handleCurrentChange(value){
+      this.params.currentPage= value
     },
     //=============================echarts类====================================
     drawLine2 () {
@@ -346,12 +349,22 @@ export default {
       });
       this.echartsResize()
     },
+    //=======================================辅助类============================================
     echartsResize () {
       let that = this;
       window.addEventListener("resize", function () {
         that.otherObjct.chart2.resize();
         that.otherObjct.chart3.resize();
       })
+    },
+    formatterStatus(scope){
+      let value =''
+      if(scope.status === 'certified'){
+        value = '已认证'
+      }else if(scope.status === 'uncertified'){
+        value = '未认证'
+      }
+      return value
     }
   }
 }

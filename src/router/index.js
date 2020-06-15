@@ -35,6 +35,17 @@ export const constantRoutes = [
     }]
   },
   {
+    path: '/videoSurveillance',
+    component: Layout,
+    name: '视频监控',
+    children: [{
+      path: '/videoSurveillance',
+      name: '视频监控',
+      component: () => import('@/views/videoSurveillance/index'),
+      meta: { title: '视频监控', icon: 'dashboard' }
+    }]
+  },
+  {
     path: '/accessManger',
     component: Layout,
     name: '门禁管理',
