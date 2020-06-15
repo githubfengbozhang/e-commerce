@@ -36,6 +36,13 @@ module.exports = {
         target: 'http://10.20.2.207:38080',
         changeOrigin: true
       },
+      '/api': {
+        target: 'http://127.0.0.1:8081',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "" //路径重写
+        }
+      }
     },
   },
   configureWebpack: {
@@ -49,7 +56,7 @@ module.exports = {
     }
   },
   chainWebpack (config) {
-
+    config.entry('main').add('babel-polyfill')
     // set svg-sprite-loader
     config.module
       .rule('svg')

@@ -101,7 +101,7 @@ import DialogVideo from "../../components/DialogVideo/index.vue"
 
 export default {
   name: 'dashboard',
-  components:{
+  components: {
     DialogVideo
   },
   data () {

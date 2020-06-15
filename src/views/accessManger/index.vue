@@ -8,7 +8,7 @@
         <div class="name">人员进入统计</div>
         <div class="info">
           <span class="info-name"> 进入人数：</span>
-          <span class="number">145</span>
+          <span class="number">{{personObject.clockPersonnum}}</span>
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name"> 人员留存：</span>
@@ -16,12 +16,12 @@
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name"> 体温正常：</span>
-          <span class="number2">4</span>
+          <span class="number2">{{personObject.clockPersonTempnum}}</span>
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name"> 体温异常：</span>
           <span class="number2"
-                style="color:rgba(255,42,42,1)">4</span>
+                style="color:rgba(255,42,42,1)">{{personObject.clockPersonAbtempnum}}</span>
           <span>（人）</span>
         </div>
 
@@ -112,6 +112,8 @@
   </div>
 </template>
 <script>
+import { todayFaceQuery } from "../../api/accessManger"
+
 export default {
   name: 'dashboard',
   data () {
@@ -152,14 +154,28 @@ export default {
       otherObjct: {
         chart2: '',
         chart3: '',
+      },
+      personObject: {
+        clockPersonnum: '', clockPersonTempnum: '', clockPersonAbtempnum: ''
       }
     }
   },
   mounted () {
+    this.personStatistics();
     this.drawLine2();
     this.drawLine3();
   },
   methods: {
+    //==================================接口请求===============================
+    personStatistics () {
+      let that = this;
+      todayFaceQuery().then((res) => {
+        const { clockPersonnum, clockPersonTempnum, clockPersonAbtempnum } = res
+        that.personObject.clockPersonnum = clockPersonnum;
+        that.personObject.clockPersonTempnum = clockPersonTempnum;
+        that.personObject.clockPersonAbtempnum = clockPersonAbtempnum;
+      })
+    },
     changeCellStyle ({ rowIndex }) {
       if (rowIndex % 2 === 0) {
         return 'oneline'
