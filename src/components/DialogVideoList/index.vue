@@ -37,8 +37,9 @@ export default {
   cursor: pointer;
 }
 .dialog-video {
-  width: 200px;
-  height: 120px;
+  width: 300px;
+  height: 201px;
+  margin: 20px 10px;
   img {
     width: 100%;
     height: 100%;
@@ -46,11 +47,10 @@ export default {
   }
 }
 .text {
-  width: 203px;
+  width: 300px;
   height: 35px;
   line-height: 35px;
   text-align: center;
-  background: #5c70b1;
   color: white;
 }
 /deep/ .el-dialog__body {

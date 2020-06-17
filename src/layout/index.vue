@@ -27,9 +27,9 @@
             </router-link>
           </div>
           <div class="silde"
-               :class="{'select-silde':selectItem ==='/NotPage'}">
-            <router-link :to="{path: '/fireManger'}"
-                         @click.native="displayArticle('/NotPage')">
+               :class="{'select-silde':selectItem ==='/videoSurveillance'}">
+            <router-link :to="{path: '/videoSurveillance'}"
+                         @click.native="displayArticle('/videoSurveillance')">
               <div>
                 <i class="iconfont">&#xe62d;</i>
               </div>

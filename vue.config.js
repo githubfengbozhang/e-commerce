@@ -19,7 +19,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -37,8 +37,9 @@ module.exports = {
         changeOrigin: true
       },
       '/api': {
-        target: 'http://10.20.2.240:8081',
+        target: 'http://10.20.2.240:8081/api',
         changeOrigin: true,
+        ws: true,
         pathRewrite: {
           "^/api": "" //路径重写
         }
