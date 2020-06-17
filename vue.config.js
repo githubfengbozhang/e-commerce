@@ -57,7 +57,6 @@ module.exports = {
         }
     },
     chainWebpack (config) {
-        config.entry('main').add('babel-polyfill')
         // set svg-sprite-loader
         config.module
             .rule('svg')

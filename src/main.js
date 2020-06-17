@@ -1,4 +1,6 @@
-
+import '@babel/polyfill'
+import Es6Promise from 'es6-promise'
+Es6Promise.polyfill()
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -12,7 +14,7 @@ Vue.prototype.$echarts = echarts
 
 const speed = sessionStorage.getItem('ISC-VIDEO-RUN-PTZ-SPEED')
 if (!speed) {
-  sessionStorage.setItem('ISC-VIDEO-RUN-PTZ-SPEED', 1)
+    sessionStorage.setItem('ISC-VIDEO-RUN-PTZ-SPEED', 1)
 }
 
 import './assets/iconfont/iconfont.css'
@@ -23,7 +25,7 @@ Vue.use(element)
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')
