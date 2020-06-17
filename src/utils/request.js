@@ -1,6 +1,6 @@
 import Axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
+// import { MessageBox, Message } from 'element-ui'
+// import store from '@/store'
 // import { getToken } from '@/utils/auth'
 
 // create an axios instance
@@ -10,7 +10,8 @@ const axios = Axios.create({
   timeout: 5000, // request timeout
 })
 
-axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
+axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // request interceptor
 axios.interceptors.request.use(

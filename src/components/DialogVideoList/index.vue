@@ -4,13 +4,19 @@
       <div class="dialog-video">
         <img :src="src" />
       </div>
-      <div class="text">位置一</div>
+      {{url}}
+      <!-- <div class="text">位置{{index}}</div> -->
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="70%">
-      <card-player :videoUrl="url"></card-player>
-      <span slot="footer" class="dialog-footer">
+    <el-dialog title="提示"
+               :visible.sync="dialogVisible"
+               v-if="dialogVisible"
+               width="70%">
+      <card-player :videoUrl="video"></card-player>
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary"
+                   @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -18,18 +24,40 @@
 
 <script>
 import CardPlayer from "@/components/Video/CardPlayer";
+import axios from 'axios'
 
 export default {
   name: "DialogVideo",
   components: { CardPlayer },
-  data() {
+  props: {
+    propsVideo: Object
+  },
+  data () {
     return {
-      url:
-        "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00001.flv?vhost=zlmediakit",
+      // url:
+      //   "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00001.flv?vhost=zlmediakit",
+      url: '',
       src: require("../../assets/img/vide.png"),
-      dialogVisible: false
+      dialogVisible: false,
+      video: "",
+      index: ""
     };
-  }
+  },
+  watch: {
+    propsVideo: {
+      immediate: true,
+      handler (newValue, oldValue) {
+        if (newValue !== oldValue) {
+          debugger
+          this.video = newValue.url;
+          this.index = newValue.id;
+        }
+      }
+    }
+  },
+  mounted () {
+  },
+
 };
 </script>
 <style lang="scss" scoped>

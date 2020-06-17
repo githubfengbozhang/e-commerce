@@ -32,12 +32,15 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/iscvideo/http-flv/': {
-        target: 'http://10.20.2.207:38080',
-        changeOrigin: true
+      '/iscvideo': {
+        target: 'http://61.161.91.90:38080/',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/iscvideo": "" //路径重写
+        }
       },
       '/api': {
-        target: 'http://10.20.2.240:8081/api',
+        target: 'http://61.161.91.90:28888/api',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
@@ -57,7 +60,6 @@ module.exports = {
     }
   },
   chainWebpack (config) {
-    config.entry('main').add('babel-polyfill')
     // set svg-sprite-loader
     config.module
       .rule('svg')
