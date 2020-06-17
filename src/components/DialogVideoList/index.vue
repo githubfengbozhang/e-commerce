@@ -4,10 +4,10 @@
       <div class="dialog-video">
         <img :src="src" />
       </div>
-      <div class="text">位置一</div>
+      <div class="text">位置{{index}}</div>
     </div>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="70%">
-      <card-player :videoUrl="url"></card-player>
+      <card-player :videoUrl="video"></card-player>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -22,13 +22,29 @@ import CardPlayer from "@/components/Video/CardPlayer";
 export default {
   name: "DialogVideo",
   components: { CardPlayer },
+  props: {
+    propsVideo: Object
+  },
   data() {
     return {
       url:
         "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00001.flv?vhost=zlmediakit",
       src: require("../../assets/img/vide.png"),
-      dialogVisible: false
+      dialogVisible: false,
+      video: "",
+      index: ""
     };
+  },
+  watch: {
+    propsVideo: {
+      immediate: true,
+      handler(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          this.video = newValue.url;
+          this.index = newValue.id;
+        }
+      }
+    }
   }
 };
 </script>
