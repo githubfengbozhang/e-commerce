@@ -10,7 +10,8 @@
   }
   .flex{
       .access-table-box{
-        height: 332px;
+        height: 100%;
+        padding-bottom:20px;
         padding-top: 20px;
         background: rgba(61,95,207,0.2);
         border: 1pt solid rgba(255,255,255,0.2);
@@ -92,6 +93,10 @@
         }
       }
   }
+  .phote{
+      width: 40px;
+      height: 40px;
+  }
   .mt20{
     margin-top: 20px;
   }
@@ -123,6 +128,7 @@
   .el-pagination{
     text-align: center;
     margin-top: 40px;
+    padding-bottom:20px;
     .el-pagination__total,.el-pagination__jump{
       font-size: 14px;
       font-family: MicrosoftYaHeiLight;

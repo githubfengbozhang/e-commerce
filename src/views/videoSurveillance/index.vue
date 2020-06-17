@@ -53,27 +53,27 @@ export default {
       videoList: [
         {
           url:
-            "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00003.flv?vhost=zlmediakit",
+            "http://61.168.1.12:38080/iscvideo/http-flv/live/A010102-00003.flv?vhost=zlmediakit",
           id: 1
         },
         {
           url:
-            "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00004.flv?vhost=zlmediakit",
+            "http://61.168.1.12:38080/iscvideo/http-flv/live/A010102-00004.flv?vhost=zlmediakit",
           id: 2
         },
         {
           url:
-            "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00005.flv?vhost=zlmediakit",
+            "http://61.168.1.12:38080/iscvideo/http-flv/live/A010102-00005.flv?vhost=zlmediakit",
           id: 3
         },
         {
           url:
-            "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00006.flv?vhost=zlmediakit",
+            "http://61.168.1.12:38080/iscvideo/http-flv/live/A010102-00006.flv?vhost=zlmediakit",
           id: 4
         },
         {
           url:
-            "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00002.flv?vhost=zlmediakit",
+            "http://61.168.1.12:38080/iscvideo/http-flv/live/A010102-00002.flv?vhost=zlmediakit",
           id: 5
         }
       ]

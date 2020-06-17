@@ -73,7 +73,7 @@
             </el-table-column>
             <el-table-column prop="image" label="相片" width="180">
               <template slot-scope="scope">
-                <img :src="scope.image" />
+                <img :src="scope.row.image" class="phote" />
               </template>
             </el-table-column>
             <el-table-column prop="perName" label="姓名"></el-table-column>
@@ -82,7 +82,7 @@
             <el-table-column prop="dataTime" label="打卡时间"></el-table-column>
           </el-table>
         </div>
-        <el-pagination
+        <!-- <el-pagination
           background
           @current-change="handleCurrentChange"
           :current-page="params.currentPage"
@@ -90,7 +90,7 @@
           :page-size="params.pageSize"
           layout="total, prev, pager, next, jumper"
           :total="otherObjct.total"
-        ></el-pagination>
+        ></el-pagination>-->
       </div>
     </div>
   </div>
@@ -126,6 +126,10 @@ export default {
   mounted() {
     this.personStatistics();
     this.loadDataList();
+    setInterval(() => {
+      this.personStatistics();
+      this.loadDataList();
+    }, 5000);
     this.drawLine2();
     this.drawLine3();
     this.hisFaceTempDateQuery();
