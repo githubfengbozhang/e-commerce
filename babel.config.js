@@ -1,23 +1,5 @@
 module.exports = {
     "presets": [
-        [
-            "@vue/app",
-            {
-                "useBuiltIns": "entry",
-                polyfills: [
-                    'es6.promise',
-                    'es6.symbol'
-                ]
-            }
-        ]
+        '@vue/cli-plugin-babel/preset'
     ],
-    "plugins": [
-        [
-            "component",
-            {
-                "libraryName": "element-ui",
-                "styleLibraryName": "theme-chalk"
-            }
-        ]
-    ]
 }
