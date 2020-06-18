@@ -25,17 +25,23 @@
     <div class="flex">
       <div class="circular-fir-min">
         <span class="selectText">选择编号</span>
-        <el-select v-model="value" placeholder="请选择">
-          <el-option label="1" value="1"></el-option>
-          <el-option label="2" value="2"></el-option>
-          <el-option label="3" value="3"></el-option>
+        <el-select v-model="value"
+                   placeholder="请选择">
+          <el-option label="1"
+                     value="1"></el-option>
+          <el-option label="2"
+                     value="2"></el-option>
+          <el-option label="3"
+                     value="3"></el-option>
         </el-select>
         <el-button class="button-query">搜索</el-button>
       </div>
     </div>
     <div class="flex">
       <div class="circular-fir-maxBox">
-        <DialogVideo v-for="(item,index) in videoList" :key="index" :propsVideo="item" />
+        <DialogVideo v-for="(item,index) in videoList"
+                     :key="index"
+                     :propsVideo="item" />
       </div>
     </div>
   </div>
@@ -49,7 +55,7 @@ export default {
   components: {
     DialogVideo
   },
-  data() {
+  data () {
     return {
       videoList: [
         {
@@ -80,12 +86,11 @@ export default {
       }
     };
   },
-  mounted() {
+  mounted () {
     // this.init();
   },
   methods: {
-    clickVideo(video, id) {
-      debugger;
+    clickVideo (video, id) {
       this.vide(video, id);
     },
     // init() {
@@ -93,8 +98,7 @@ export default {
     //     this.vide(item.url, item.id);
     //   });
     // },
-    vide(video, id) {
-      debugger;
+    vide (video, id) {
       let that = this;
       axios
         .get(

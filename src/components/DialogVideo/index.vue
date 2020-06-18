@@ -6,11 +6,16 @@
       </div>
       <!-- <div class="text">位置{{index}}</div> -->
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" v-if="dialogVisible" width="70%">
+    <el-dialog title="提示"
+               :visible.sync="dialogVisible"
+               v-if="dialogVisible"
+               width="70%">
       <card-player :videoUrl="video"></card-player>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary"
+                   @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -27,7 +32,7 @@ export default {
     propsVideo: Object
   },
 
-  data() {
+  data () {
     return {
       url:
         "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00008.flv?vhost=zlmediakit",
@@ -45,7 +50,7 @@ export default {
   watch: {
     propsVideo: {
       immediate: true,
-      handler(newValue, oldValue) {
+      handler (newValue, oldValue) {
         if (newValue !== oldValue) {
           this.video = newValue.url;
           this.index = newValue.id;
@@ -71,11 +76,10 @@ export default {
     }
   },
   methods: {
-    clickVideo() {
+    clickVideo () {
       this.vide(this.video, this.index);
     },
-    vide(video, id) {
-      debugger;
+    vide (video, id) {
       let that = this;
       axios
         .get(

@@ -7,11 +7,16 @@
       {{url}}
       <!-- <div class="text">位置{{index}}</div> -->
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" v-if="dialogVisible" width="70%">
+    <el-dialog title="提示"
+               :visible.sync="dialogVisible"
+               v-if="dialogVisible"
+               width="70%">
       <card-player :videoUrl="video"></card-player>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary"
+                   @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -27,12 +32,17 @@ export default {
   props: {
     propsVideo: Object
   },
-  data() {
+  data () {
     return {
       // url:
       //   "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00001.flv?vhost=zlmediakit",
       url: "",
-      src: require("../../assets/img/vide.png"),
+      src: '',
+      img1: require("../../assets/img/sp1.png"),
+      img2: require("../../assets/img/sp2.png"),
+      img3: require("../../assets/img/sp3.png"),
+      img4: require("../../assets/img/sp4.png"),
+      img5: require("../../assets/img/sp5.png"),
       dialogVisible: false,
       video: "",
       index: ""
@@ -41,22 +51,37 @@ export default {
   watch: {
     propsVideo: {
       immediate: true,
-      handler(newValue, oldValue) {
+      handler (newValue, oldValue) {
         if (newValue !== oldValue) {
-          debugger;
           this.video = newValue.url;
           this.index = newValue.id;
+          switch (this.index) {
+            case 2:
+              this.src = this.img1;
+              break;
+            case 5:
+              this.src = this.img2;
+              break;
+            case 6:
+              this.src = this.img3;
+              break;
+            case 7:
+              this.src = this.img4;
+              break;
+            case 8:
+              this.src = this.img5;
+              break;
+          }
         }
       }
     }
   },
-  mounted() {},
+  mounted () { },
   methods: {
-    clickVideo() {
+    clickVideo () {
       this.vide(this.video, this.index);
     },
-    vide(video, id) {
-      debugger;
+    vide (video, id) {
       let that = this;
       axios
         .get(
