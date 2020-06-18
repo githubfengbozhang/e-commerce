@@ -35,7 +35,12 @@ export default {
     return {
       url:
         "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00008.flv?vhost=zlmediakit",
-      src: require("../../assets/img/vide.png"),
+      src: '',
+      img1: require("../../assets/img/sp1.png"),
+      img2: require("../../assets/img/sp2.png"),
+      img3: require("../../assets/img/sp3.png"),
+      img4: require("../../assets/img/sp4.png"),
+      img5: require("../../assets/img/sp5.png"),
       dialogVisible: false,
       video: "",
       index: ""
@@ -48,6 +53,23 @@ export default {
         if (newValue !== oldValue) {
           this.video = newValue.url;
           this.index = newValue.id;
+          switch (this.index) {
+            case 2:
+              this.src = this.img1;
+              break;
+            case 5:
+              this.src = this.img2;
+              break;
+            case 6:
+              this.src = this.img3;
+              break;
+            case 7:
+              this.src = this.img4;
+              break;
+            case 8:
+              this.src = this.img5;
+              break;
+          }
         }
       }
     }
