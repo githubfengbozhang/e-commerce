@@ -8,11 +8,11 @@
         <div class="name">设备统计</div>
         <div class="info">
           <span class="info-name">设备总数：</span>
-          <span class="number">145</span>
+          <span class="number">54</span>
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备异常：</span>
-          <span class="number1">4</span>
+          <span class="number1">0</span>
           <span>（个）</span>
         </div>
         <div id="myChart" :style="{width: '860px', height: '230px'}"></div>
@@ -23,9 +23,9 @@
           <span class="info-name">进入人数：</span>
           <span class="number">145</span>
           <span>（人）</span>
-          <span class="space"></span>
+          <!-- <span class="space"></span>
           <span class="info-name">留存人数：</span>
-          <span class="number1">4</span>
+          <span class="number1">4</span>-->
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温正常：</span>
@@ -33,7 +33,7 @@
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温异常：</span>
-          <span class="number1">4</span>
+          <span class="number1">0</span>
           <span>（人）</span>
         </div>
         <div id="myChart1" :style="{width: '860px', height: '230px'}"></div>
@@ -55,7 +55,7 @@
           </div>
           <div class="mt0">
             <span class="open">开：5</span>
-            <span class="close">关：1</span>
+            <span class="close">关：0</span>
           </div>
         </div>
         <div class="vide">
@@ -72,7 +72,7 @@
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备异常：</span>
-          <span class="number1">4</span>
+          <span class="number1">0</span>
           <span>（个）</span>
         </div>
         <div id="myChart3" :style="{width: '860px', height: '250px'}"></div>
@@ -82,11 +82,11 @@
         <div class="info">
           <span class="info-name">设备总数：</span>
           <span class="number">145</span>
-          <span>（人）</span>
+          <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备总数：</span>
           <span class="number1">4</span>
-          <span>（人）</span>
+          <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">开：</span>
           <span class="number">4</span>
