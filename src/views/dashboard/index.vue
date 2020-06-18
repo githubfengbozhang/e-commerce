@@ -8,15 +8,14 @@
         <div class="name">设备统计</div>
         <div class="info">
           <span class="info-name">设备总数：</span>
-          <span class="number">145</span>
+          <span class="number">54</span>
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备异常：</span>
-          <span class="number1">4</span>
+          <span class="number1">0</span>
           <span>（个）</span>
         </div>
-        <div id="myChart"
-             :style="{width: '860px', height: '230px'}"></div>
+        <div id="myChart" :style="{width: '860px', height: '230px'}"></div>
       </div>
       <div class="circular">
         <div class="name">人员进入情况</div>
@@ -24,9 +23,9 @@
           <span class="info-name">进入人数：</span>
           <span class="number">145</span>
           <span>（人）</span>
-          <span class="space"></span>
+          <!-- <span class="space"></span>
           <span class="info-name">留存人数：</span>
-          <span class="number1">4</span>
+          <span class="number1">4</span>-->
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温正常：</span>
@@ -34,11 +33,10 @@
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温异常：</span>
-          <span class="number1">4</span>
+          <span class="number1">0</span>
           <span>（人）</span>
         </div>
-        <div id="myChart1"
-             :style="{width: '860px', height: '230px'}"></div>
+        <div id="myChart1" :style="{width: '860px', height: '230px'}"></div>
       </div>
     </div>
     <div class="flex">
@@ -57,14 +55,11 @@
           </div>
           <div class="mt0">
             <span class="open">开：5</span>
-            <span class="close">关：1</span>
+            <span class="close">关：0</span>
           </div>
         </div>
         <div class="vide">
-          <DialogVideo v-for="(item,index) in list"
-                       :key="index"
-                       :propsVideo="item"
-                       @click="clickVideo(item.url)" />
+          <DialogVideo v-for="(item,index) in videoList" :key="index" :propsVideo="item" />
         </div>
       </div>
     </div>
@@ -77,22 +72,21 @@
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备异常：</span>
-          <span class="number1">4</span>
+          <span class="number1">0</span>
           <span>（个）</span>
         </div>
-        <div id="myChart3"
-             :style="{width: '860px', height: '250px'}"></div>
+        <div id="myChart3" :style="{width: '860px', height: '250px'}"></div>
       </div>
       <div class="circular">
         <div class="name">能耗统计</div>
         <div class="info">
           <span class="info-name">设备总数：</span>
           <span class="number">145</span>
-          <span>（人）</span>
+          <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备总数：</span>
           <span class="number1">4</span>
-          <span>（人）</span>
+          <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">开：</span>
           <span class="number">4</span>
@@ -100,89 +94,85 @@
           <span class="info-name">关：</span>
           <span class="number">3</span>
         </div>
-        <div id="myChart4"
-             :style="{width: '860px', height: '250px'}"></div>
+        <div id="myChart4" :style="{width: '860px', height: '250px'}"></div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import DialogVideo from "../../components/DialogVideo/index.vue";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "dashboard",
   components: {
     DialogVideo
   },
-  data () {
+  data() {
     return {
       videoList: [
         {
-          url:
-            "A010102-00008",
+          url: "A010102-00008",
           id: 8
         },
         {
-          url:
-            "A010102-00007",
+          url: "A010102-00007",
           id: 7
         },
         {
-          url:
-            "A010102-00006",
+          url: "A010102-00006",
           id: 6
         },
         {
-          url:
-            "A010102-00005",
+          url: "A010102-00005",
           id: 5
         },
         {
-          url:
-            "A010102-00002",
+          url: "A010102-00002",
           id: 2
         }
       ],
       list: []
     };
   },
-  mounted () {
-    this.init();
+  mounted() {
+    // this.init();
     this.drawLine();
     this.drawLine1();
     this.drawLine2();
     this.drawLine3();
   },
   methods: {
-    clickVideo (video) {
-      debugger
+    // clickVideo(video) {
+    //   debugger;
 
-      this.vide(video)
-    },
-    init () {
-      this.videoList.map((item, index) => {
-        this.vide(item.url, item.id);
-      })
-    },
-    vide (video, id) {
-      debugger
-      let that = this
-      axios.get(`/iscvideo/iscvideo/api/baseinfo/local/getCamStreamUrlByAssetNo?assetNo=${video}&protocol=HTTP_FLV&streamType=MAIN`).then(res => {
-        if (res.data) {
-          let url = `http://61.161.91.90:38080${res.data}`;
-          let temp = {
-            url,
-            id
-          }
-          that.list.push(temp)
-        }
+    //   this.vide(video);
+    // },
+    // init() {
+    //   this.videoList.map((item, index) => {
+    //     this.vide(item.url, item.id);
+    //   });
+    // },
+    // vide(video, id) {
+    //   debugger;
+    //   let that = this;
+    //   axios
+    //     .get(
+    //       `/iscvideo/iscvideo/api/baseinfo/local/getCamStreamUrlByAssetNo?assetNo=${video}&protocol=HTTP_FLV&streamType=MAIN`
+    //     )
+    //     .then(res => {
+    //       if (res.data) {
+    //         let url = `http://61.161.91.90:38080${res.data}`;
+    //         let temp = {
+    //           url,
+    //           id
+    //         };
+    //         that.list.push(temp);
+    //       }
+    //     });
+    // },
 
-
-      })
-    },
-
-    drawLine () {
+    drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart"));
       // 绘制图表
@@ -254,7 +244,7 @@ export default {
         ]
       });
     },
-    drawLine1 () {
+    drawLine1() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart1"));
       // 绘制图表
@@ -365,7 +355,7 @@ export default {
         ]
       });
     },
-    drawLine2 () {
+    drawLine2() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart3"));
       // 绘制图表
@@ -449,7 +439,7 @@ export default {
         ]
       });
     },
-    drawLine3 () {
+    drawLine3() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart4"));
       // 绘制图表

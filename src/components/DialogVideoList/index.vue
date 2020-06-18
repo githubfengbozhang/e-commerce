@@ -1,22 +1,17 @@
 <template>
   <div class="vide">
-    <div @click="dialogVisible=true">
+    <div @click="clickVideo">
       <div class="dialog-video">
         <img :src="src" />
       </div>
       {{url}}
       <!-- <div class="text">位置{{index}}</div> -->
     </div>
-    <el-dialog title="提示"
-               :visible.sync="dialogVisible"
-               v-if="dialogVisible"
-               width="70%">
+    <el-dialog title="提示" :visible.sync="dialogVisible" v-if="dialogVisible" width="70%">
       <card-player :videoUrl="video"></card-player>
-      <span slot="footer"
-            class="dialog-footer">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary"
-                   @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -24,7 +19,7 @@
 
 <script>
 import CardPlayer from "@/components/Video/CardPlayer";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "DialogVideo",
@@ -32,11 +27,11 @@ export default {
   props: {
     propsVideo: Object
   },
-  data () {
+  data() {
     return {
       // url:
       //   "http://192.168.1.12:38080/iscvideo/http-flv/live/A010102-00001.flv?vhost=zlmediakit",
-      url: '',
+      url: "",
       src: require("../../assets/img/vide.png"),
       dialogVisible: false,
       video: "",
@@ -46,18 +41,37 @@ export default {
   watch: {
     propsVideo: {
       immediate: true,
-      handler (newValue, oldValue) {
+      handler(newValue, oldValue) {
         if (newValue !== oldValue) {
-          debugger
+          debugger;
           this.video = newValue.url;
           this.index = newValue.id;
         }
       }
     }
   },
-  mounted () {
-  },
-
+  mounted() {},
+  methods: {
+    clickVideo() {
+      this.vide(this.video, this.index);
+    },
+    vide(video, id) {
+      debugger;
+      let that = this;
+      axios
+        .get(
+          `http://61.161.91.90:38080/iscvideo/api/baseinfo/local/getCamStreamUrlByAssetNo?assetNo=${video}&protocol=HTTP_FLV&streamType=MAIN`
+        )
+        .then(res => {
+          if (res.data) {
+            let url = `http://61.161.91.90:38080${res.data}`;
+            that.video = url;
+            that.index = id;
+            that.dialogVisible = true;
+          }
+        });
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

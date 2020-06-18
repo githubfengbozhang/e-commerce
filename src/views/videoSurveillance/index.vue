@@ -25,98 +25,88 @@
     <div class="flex">
       <div class="circular-fir-min">
         <span class="selectText">选择编号</span>
-        <el-select v-model="value"
-                   placeholder="请选择">
-          <el-option label="1"
-                     value="1"></el-option>
-          <el-option label="2"
-                     value="2"></el-option>
-          <el-option label="3"
-                     value="3"></el-option>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option label="1" value="1"></el-option>
+          <el-option label="2" value="2"></el-option>
+          <el-option label="3" value="3"></el-option>
         </el-select>
         <el-button class="button-query">搜索</el-button>
       </div>
     </div>
     <div class="flex">
       <div class="circular-fir-maxBox">
-        <DialogVideo v-for="(item,index) in list"
-                     :key="index"
-                     :propsVideo="item"
-                     @click="clickVideo(item.url)" />
+        <DialogVideo v-for="(item,index) in videoList" :key="index" :propsVideo="item" />
       </div>
     </div>
   </div>
 </template>
 <script>
 import DialogVideo from "../../components/DialogVideoList/index";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "",
   components: {
     DialogVideo
   },
-  data () {
+  data() {
     return {
       videoList: [
         {
-          url:
-            "A010102-00008",
+          url: "A010102-00008",
           id: 8
         },
         {
-          url:
-            "A010102-00007",
+          url: "A010102-00007",
           id: 7
         },
         {
-          url:
-            "A010102-00006",
+          url: "A010102-00006",
           id: 6
         },
         {
-          url:
-            "A010102-00005",
+          url: "A010102-00005",
           id: 5
         },
         {
-          url:
-            "A010102-00002",
+          url: "A010102-00002",
           id: 2
         }
       ],
-      list: []
+      list: [],
+      videoItem: {
+        url: "",
+        id: ""
+      }
     };
   },
-  mounted () {
-    this.init();
+  mounted() {
+    // this.init();
   },
   methods: {
-    clickVideo (video) {
-      debugger
-
-      this.vide(video)
+    clickVideo(video, id) {
+      debugger;
+      this.vide(video, id);
     },
-    init () {
-      this.videoList.map((item, index) => {
-        this.vide(item.url, item.id);
-      })
-    },
-    vide (video, id) {
-      debugger
-      let that = this
-      axios.get(`/iscvideo/iscvideo/api/baseinfo/local/getCamStreamUrlByAssetNo?assetNo=${video}&protocol=HTTP_FLV&streamType=MAIN`).then(res => {
-        if (res.data) {
-          let url = `http://61.161.91.90:38080${res.data}`;
-          let temp = {
-            url,
-            id
+    // init() {
+    //   this.videoList.map(item => {
+    //     this.vide(item.url, item.id);
+    //   });
+    // },
+    vide(video, id) {
+      debugger;
+      let that = this;
+      axios
+        .get(
+          `http://61.161.91.90:38080/iscvideo/api/baseinfo/local/getCamStreamUrlByAssetNo?assetNo=${video}&protocol=HTTP_FLV&streamType=MAIN`
+        )
+        .then(res => {
+          if (res.data) {
+            let url = `http://61.161.91.90:38080${res.data}`;
+            that.videoItem.url = url;
+            that.videoItem.id = id;
           }
-          that.list.push(temp)
-        }
-
-
-      })
+        });
     }
   }
 };

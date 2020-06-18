@@ -20,8 +20,10 @@
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温异常：</span>
-          <span class="number2"
-                style="color:rgba(255,42,42,1)">{{personObject.clockPersonAbtempnum}}</span>
+          <span
+            class="number2"
+            style="color:rgba(255,42,42,1)"
+          >{{personObject.clockPersonAbtempnum}}</span>
           <span>（人）</span>
         </div>
       </div>
@@ -40,8 +42,7 @@
               <span class="number1">4</span>
               <span>（人）</span>
             </div>
-            <div id="myChart3"
-                 :style="{width: '100%', height:' 70%'}"></div>
+            <div id="myChart3" :style="{width: '100%', height:' 70%'}"></div>
           </div>
         </el-col>
         <el-col :span="12">
@@ -56,8 +57,7 @@
               <span class="number1">4</span>
               <span>（人）</span>
             </div>
-            <div id="myChart4"
-                 :style="{width: '100%', height:' 70%'}"></div>
+            <div id="myChart4" :style="{width: '100%', height:' 70%'}"></div>
           </div>
         </el-col>
       </el-row>
@@ -65,34 +65,23 @@
     <div class="flex mt20">
       <div class="access-table-box">
         <div class="table-list">
-          <el-table :data="tableData"
-                    stripe
-                    style="width: 100%"
-                    :cell-class-name="changeCellStyle">
-            <el-table-column prop="date"
-                             label="序号"
-                             type="index"
-                             width="180">
-              <template slot-scope="scope">{{(params.currentPage-1)*params.pageSize + scope.$index+1}}</template>
+          <el-table :data="tableData" stripe style="width: 100%" :cell-class-name="changeCellStyle">
+            <el-table-column prop="date" label="序号" type="index" width="180">
+              <template
+                slot-scope="scope"
+              >{{(params.currentPage-1)*params.pageSize + scope.$index+1}}</template>
             </el-table-column>
-            <el-table-column prop="image"
-                             label="相片"
-                             width="180">
+            <el-table-column prop="image" label="相片" width="180">
               <template slot-scope="scope">
-                <img :src="scope.row.image"
-                     class="phote" />
+                <img :src="scope.row.image" class="phote" />
               </template>
             </el-table-column>
-            <el-table-column prop="perName"
-                             label="姓名"></el-table-column>
-            <el-table-column prop="certificateNumber"
-                             label="身份"></el-table-column>
-            <el-table-column prop="status"
-                             label="状态"
-                             :formatter="formatterStatus"></el-table-column>
-            <el-table-column prop="dataTime"
-                             label="打卡时间"
-                             :formatter="formatterTime"></el-table-column>
+            <el-table-column prop="perName" label="姓名"></el-table-column>
+            <el-table-column prop="certificateNumber" label="身份"></el-table-column>
+            <el-table-column prop="status" label="状态" :formatter="formatterStatus"></el-table-column>
+            <el-table-column prop="dataTime" label="打卡时间" :formatter="formatterTime"></el-table-column>
+            <el-table-column prop="temperature" label="温度"></el-table-column>
+            <el-table-column prop="groupId" label="分组"></el-table-column>
           </el-table>
         </div>
         <!-- <el-pagination
@@ -117,7 +106,7 @@ import {
 
 export default {
   name: "dashboard",
-  data () {
+  data() {
     return {
       tableData: [],
       otherObjct: {
@@ -136,7 +125,7 @@ export default {
       }
     };
   },
-  mounted () {
+  mounted() {
     this.personStatistics();
     this.loadDataList();
     setInterval(() => {
@@ -149,7 +138,7 @@ export default {
   },
   methods: {
     //==================================接口请求===============================
-    personStatistics () {
+    personStatistics() {
       let that = this;
       todayFaceQuery().then(res => {
         const {
@@ -162,14 +151,14 @@ export default {
         that.personObject.clockPersonAbtempnum = clockPersonAbtempnum;
       });
     },
-    loadDataList () {
+    loadDataList() {
       let that = this;
       faceQuery(that.params).then(res => {
         that.tableData = res.data.records;
         that.otherObjct.total = res.total;
       });
     },
-    hisFaceTempDateQuery () {
+    hisFaceTempDateQuery() {
       let time = new Date();
       let year = time.getFullYear();
       let month =
@@ -182,18 +171,18 @@ export default {
         //  res.data.records
       });
     },
-    changeCellStyle ({ rowIndex }) {
+    changeCellStyle({ rowIndex }) {
       if (rowIndex % 2 === 0) {
         return "oneline";
       } else {
         return "twoline";
       }
     },
-    handleCurrentChange (value) {
+    handleCurrentChange(value) {
       this.params.currentPage = value;
     },
     //=============================echarts类====================================
-    drawLine2 () {
+    drawLine2() {
       // 基于准备好的dom，初始化echarts实例
       this.otherObjct.chart2 = this.$echarts.init(
         document.getElementById("myChart3")
@@ -280,7 +269,7 @@ export default {
       });
       this.echartsResize();
     },
-    drawLine3 () {
+    drawLine3() {
       // 基于准备好的dom，初始化echarts实例
       this.otherObjct.chart3 = this.$echarts.init(
         document.getElementById("myChart4")
@@ -395,14 +384,14 @@ export default {
       this.echartsResize();
     },
     //=======================================辅助类============================================
-    echartsResize () {
+    echartsResize() {
       let that = this;
-      window.addEventListener("resize", function () {
+      window.addEventListener("resize", function() {
         that.otherObjct.chart2.resize();
         that.otherObjct.chart3.resize();
       });
     },
-    formatterStatus (scope) {
+    formatterStatus(scope) {
       let value = "";
       if (scope.status === "certified") {
         value = "已认证";
@@ -411,16 +400,25 @@ export default {
       }
       return value;
     },
-    formatterTime (scope) {
-      let value = "";
+    formatterTime(scope) {
       if (scope.dataTime) {
         let time = new Date(scope.dataTime);
         let year = time.getFullYear();
-        let month = time.getMonth() + 1 > 9 ? time.getMonth() + 1 : `0${time.getMonth() + 1}`;
-        let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`
-        return `${year}-${month}-${day}`
+        let month =
+          time.getMonth() + 1 > 9
+            ? time.getMonth() + 1
+            : `0${time.getMonth() + 1}`;
+        let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
+
+        let hours =
+          time.getHours() > 9 ? time.getHours() : `0${time.getHours()}`;
+        let minute =
+          time.getMinutes() > 9 ? time.getMinutes() : `0${time.getMinutes()}`;
+        let seconds =
+          time.getSeconds() > 9 ? time.getSeconds() : `0${time.getSeconds()}`;
+        return `${year}-${month}-${day} ${hours}:${minute}:${seconds}`;
       } else {
-        return ''
+        return "";
       }
     }
   }
