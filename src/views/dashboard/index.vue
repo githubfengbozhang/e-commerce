@@ -268,7 +268,7 @@ export default {
       countPerson: 0,
       temperature: {
         time: [],
-        temperature: []
+        number: []
       }
     };
   },
@@ -320,7 +320,6 @@ export default {
       let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
       const dataStar = `${year}-${month}-${day}`;
       faceQuery({ dataStar }).then(res => {
-        debugger
         res.data.records.map(item => {
           const time = new Date(item.dataTime);
           let month =
@@ -331,9 +330,127 @@ export default {
           // return `${month}月${day}日`;
           that.temperature.time.push(`${month}月${day}日`)
         })
-        res.data.records.map(item => that.temperature.temperature.push(item.temperature));
-        console.log(that.temperature)
+        const temperatureTime = new Set(that.temperature.time);
+        that.temperature.time = Array.from(temperatureTime);
 
+        let list = res.data.records.map(item => {
+          const time = new Date(item.dataTime);
+          let month =
+            time.getMonth() + 1 > 9
+              ? time.getMonth() + 1
+              : `0${time.getMonth() + 1}`;
+          let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
+          item.time = `${month}月${day}日`;
+          return item;
+        })
+        let obj = {}
+        that.temperature.time.map(item => {
+          obj[item] = []
+          list.map(item1 => {
+            if (item1.time === item) {
+              obj[item].push(item1);
+            }
+          })
+          that.temperature.number.push(obj[item].length)
+        })
+
+
+
+
+        let myChart = that.$echarts.init(document.getElementById("myChart1"));
+        myChart.setOption({
+          tooltip: {},
+          grid: {
+            top: "10%",
+            bottom: "25%", //也可设置left和right设置距离来控制图表的大小
+            left: "5%",
+            right: "2%"
+          },
+          xAxis: {
+            data: that.temperature.time,
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "rgba(186,210,242,1)" //X轴文字颜色
+              }
+            }
+          },
+          yAxis: {
+            type: "value",
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "rgba(186,210,242,1)"
+              }
+            },
+            splitArea: {
+              show: true,
+              areaStyle: {
+                color: ["rgba(2,17,37,0.5)", "rgba(15,42,82,1)"]
+              }
+            }
+          },
+          series: [
+            {
+              name: "温度",
+              type: "bar",
+              barWidth: 10, // 柱状粗细
+              data: that.temperature.number,
+              label: {
+                show: true,
+                position: "top",
+                textStyle: {
+                  color: "rgba(186,210,242,1)"
+                }
+              },
+              itemStyle: {
+                normal: {
+                  // 渐变 柱状
+                  color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "rgba(123,106,239,1)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(51,108,241,1)"
+                    }
+                  ])
+                }
+              }
+            },
+            {
+              name: "折线",
+              type: "line",
+              smooth: false, //折点是圆弧状的
+              // showSymbol: true,
+              showAllSymbol: true,
+              symbol: "circle", //折点设定为实心点
+              symbolSize: 10, //设定实心点的大小
+              itemStyle: {
+                /*设置折线颜色*/
+                color: "rgba(120,106,239,1)",
+                borderColor: "#fff",
+                borderWidth: 3,
+                shadowColor: "rgba(0, 0, 0, .3)",
+                shadowBlur: 0,
+                shadowOffsetY: 2,
+                shadowOffsetX: 2
+                // normal: {
+                //   // color: '#fc8a0f', //折点颜色
+                //   lineStyle: {
+                //     color: 'rgba(120,106,239,1)' //折线颜色
+                //   }
+
+                // }
+              },
+              data: that.temperature.number,
+            }
+          ]
+        })
         //  res.data.records
       });
     },
@@ -359,34 +476,6 @@ export default {
       }
       return '';
     },
-    // clickVideo(video) {
-    //   debugger;
-
-    //   this.vide(video);
-    // },
-    // init() {
-    //   this.videoList.map((item, index) => {
-    //     this.vide(item.url, item.id);
-    //   });
-    // },
-    // vide(video, id) {
-    //   debugger;
-    //   let that = this;
-    //   axios
-    //     .get(
-    //       `/iscvideo/iscvideo/api/baseinfo/local/getCamStreamUrlByAssetNo?assetNo=${video}&protocol=HTTP_FLV&streamType=MAIN`
-    //     )
-    //     .then(res => {
-    //       if (res.data) {
-    //         let url = `http://61.161.91.90:38080${res.data}`;
-    //         let temp = {
-    //           url,
-    //           id
-    //         };
-    //         that.list.push(temp);
-    //       }
-    //     });
-    // },
     loadTableData () {
       let that = this
       axios.get('/data/ranking.json').then(res => {
@@ -511,7 +600,7 @@ export default {
             name: "销量",
             type: "bar",
             barWidth: 10, // 柱状粗细
-            data: this.temperature.temperature,
+            data: this.temperature.number,
             label: {
               show: true,
               position: "top",
@@ -560,7 +649,7 @@ export default {
 
               // }
             },
-            data: this.temperature.temperature,
+            data: this.temperature.number,
           }
         ]
       });
