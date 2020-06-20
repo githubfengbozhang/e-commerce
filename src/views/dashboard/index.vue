@@ -7,10 +7,11 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <div class="circular">
-            <div class="name">直播参观人数</div>
+            <div class="name"
+                 @click="openDialog()">直播参观人数</div>
             <div class="info">
               <span class="info-name">参观总数：</span>
-              <span class="number">1.7k</span>
+              <span class="number">{{countPerson}}</span>
               <span>（个）</span>
             </div>
             <div id="myChart5"
@@ -60,13 +61,21 @@
                         :show-header='false'
                         :row-class-name="tabRowClassName"
                         style="width: 100%">
-                <el-table-column prop="sort"
-                                 label="日期"
+                <el-table-column type="index"
+                                 label="序"
                                  width="50">
+                  <template slot-scope="scope">
+                    {{scope.$index + 1}}
+                  </template>
                 </el-table-column>
-                <el-table-column prop="context"
-                                 label="姓名">
+                <el-table-column prop="phb"
+                                 label="分类">
                 </el-table-column>
+                <el-table-column prop="number"
+                                 label="数量"
+                                 width="120">
+                </el-table-column>
+
               </el-table>
             </div>
           </div>
@@ -103,7 +112,7 @@
         <el-col :span="8">
           <div class="circular-sale">
             <p class="title">当天销售总额</p>
-            <p class="number"> 2,545,865(元)</p>
+            <p class="number">{{zje}} </p>
           </div>
         </el-col>
         <el-col :span="16">
@@ -189,13 +198,25 @@
           </div>
         </el-col>
       </el-row>
-
+      <el-dialog title="提示"
+                 :visible.sync="dialogVisible"
+                 width="50%">
+        <FormDialog ref="formDialog" />
+        <span slot="footer"
+              class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary"
+                     @click="query()">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 <script>
 import DialogVideo from "../../components/DialogVideo/index.vue";
 import axios from "axios";
+import FormDialog from "./components/index.vue"
+
 import {
   todayFaceQuery,
   faceQuery,
@@ -205,7 +226,8 @@ import {
 export default {
   name: "dashboard",
   components: {
-    DialogVideo
+    DialogVideo,
+    FormDialog
   },
   data () {
     return {
@@ -241,20 +263,80 @@ export default {
         clockPersonTempnum: "",
         clockPersonAbtempnum: ""
       },
+      dialogVisible: false,
+      zje: '',
+      countPerson: 0,
+      temperature: {
+        time: [],
+        temperature: []
+      }
     };
   },
   mounted () {
     // this.init();
     this.personStatistics();
+    this.hisFaceTempDateQuery()
     this.drawLine();
     this.drawLine1();
     this.drawLine2();
     this.drawLine3();
     this.drawLine4();
     // 销售排行榜table的数据
-    this.loadTableData();
+    // this.loadTableData();
+    this.zje = this.toThousands(localStorage.getItem('zje'));
+    this.tableData = JSON.parse(window.localStorage.getItem('phbList'));
+    if (JSON.parse(window.localStorage.getItem('broadcastNumber')).length > 0) {
+      this.countPerson = JSON.parse(window.localStorage.getItem('broadcastNumber')).reduce((total, num) => {
+        return parseInt(total) + parseInt(num);
+      })
+    }
   },
   methods: {
+    toThousands (num) {
+      var result = [], counter = 0;
+      num = (num || 0).toString().split('');
+      for (var i = num.length - 1; i >= 0; i--) {
+        counter++;
+        result.unshift(num[i]);
+        if (!(counter % 3) && i != 0) { result.unshift(','); }
+      }
+      return result.join('');
+    },
+    query () {
+      this.dialogVisible = false;
+      this.$refs.formDialog.onSubmit();
+    },
+    openDialog () {
+      this.dialogVisible = true
+    },
+    hisFaceTempDateQuery () {
+      let that = this;
+      let time = new Date();
+      let year = time.getFullYear();
+      let month =
+        time.getMonth() + 1 > 9
+          ? time.getMonth() + 1
+          : `0${time.getMonth() + 1}`;
+      let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
+      const dataStar = `${year}-${month}-${day}`;
+      faceQuery({ dataStar }).then(res => {
+        debugger
+        res.data.records.map(item => {
+          const time = new Date(item.dataTime);
+          let month =
+            time.getMonth() + 1 > 9
+              ? time.getMonth() + 1
+              : `0${time.getMonth() + 1}`;
+          let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
+          // return `${month}月${day}日`;
+          that.temperature.time.push(`${month}月${day}日`)
+        })
+        res.data.records.map(item => that.temperature.temperature.push(item.temperature));
+        console.log(that.temperature)
+
+        //  res.data.records
+      });
+    },
     personStatistics () {
       let that = this;
       todayFaceQuery().then(res => {
@@ -269,12 +351,13 @@ export default {
       });
     },
     tabRowClassName (row, rowIndex) {
-      let index = rowIndex;
-      if (index % 2 == 0) {
-        return 'two-row'
+      let index = rowIndex + 1;
+      if (rowIndex % 2 === 0) {
+        return 'two-row';
       } else {
-        return 'one-row'
+        return 'one-row';
       }
+      return '';
     },
     // clickVideo(video) {
     //   debugger;
@@ -308,7 +391,6 @@ export default {
       let that = this
       axios.get('/data/ranking.json').then(res => {
         that.tableData = res.data.list
-        console.log(that.tableData)
       }).catch(err => {
         alert("抱歉，服务出错！")
       })
@@ -398,11 +480,7 @@ export default {
           right: "2%"
         },
         xAxis: {
-          data: [
-            "6月18日",
-            "6月19日",
-            "6月20日",
-          ],
+          data: this.temperature.time,
           axisLabel: {
             show: true,
             textStyle: {
@@ -433,7 +511,7 @@ export default {
             name: "销量",
             type: "bar",
             barWidth: 10, // 柱状粗细
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20],
+            data: this.temperature.temperature,
             label: {
               show: true,
               position: "top",
@@ -482,7 +560,7 @@ export default {
 
               // }
             },
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20]
+            data: this.temperature.temperature,
           }
         ]
       });
@@ -677,11 +755,7 @@ export default {
           right: "2%"
         },
         xAxis: {
-          data: [
-            "6月18日",
-            "6月19日",
-            "6月20日"
-          ],
+          data: JSON.parse(window.localStorage.getItem('broadcastTime')),
           axisLabel: {
             show: true,
             textStyle: {
@@ -712,7 +786,7 @@ export default {
             name: "销量",
             type: "bar",
             barWidth: 10, // 柱状粗细
-            data: [500, 550, 650],
+            data: JSON.parse(window.localStorage.getItem('broadcastNumber')),
             label: {
               show: true,
               position: "top",

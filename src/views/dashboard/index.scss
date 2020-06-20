@@ -172,4 +172,22 @@
 /deep/ .el-table .one-row{
   background: #1A3485;
 }
-
+/deep/ .el-table tbody .el-table__row{
+  background-color: #1D3A8F;
+  color: white;
+}
+/deep/ .el-table--striped .el-table__body tr.el-table__row--striped td{
+  background: #1A3485;
+}
+/deep/ .el-table tbody tr {
+  border: 0px solid
+}
+/deep/ .el-table tbody tr td{
+  border: 0px solid
+}
+/deep/ .el-table::before{
+  height: 0;
+}
+/deep/ .el-table, .el-table__expanded-cell{
+  background-color: transparent;
+}

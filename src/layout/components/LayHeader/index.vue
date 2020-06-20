@@ -1,9 +1,12 @@
 <template>
   <div class="lay-header">
     <div class="icon">
+
+      <img :src="headerImg1"
+           style="margin:0 10px" />
+      <img :src="headerImg"
+           style="margin:0 10px" />
       <i class="iconfont">&#xe67f;</i>
-      <i class="iconfont">&#xe637;</i>
-      <img :src="headerImg" />
     </div>
     <div class="title">天下大足电商直播基地智慧管理系统</div>
     <div class="time">{{time}}</div>
@@ -16,7 +19,7 @@ export default {
   data () {
     return {
       headerImg: require("../../../assets/img/zlj.png"),
-
+      headerImg1: require("../../../assets/img/sjt.png"),
       time: this.initTime()
     }
   },
