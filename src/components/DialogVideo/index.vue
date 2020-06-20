@@ -102,7 +102,7 @@ export default {
   cursor: pointer;
 }
 .dialog-video {
-  width: 200px;
+  width: 180px;
   height: 120px;
   img {
     width: 100%;

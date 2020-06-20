@@ -8,7 +8,7 @@
         <div class="name">设备统计</div>
         <div class="info">
           <span class="info-name"> 设备总数：</span>
-          <span class="number">22</span>
+          <span class="number">70</span>
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name"> 设备异常：</span>
@@ -16,7 +16,7 @@
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name"> 设备报警：</span>
-          <span class="number2">4</span>
+          <span class="number2">0</span>
           <span>（个）</span>
         </div>
 
@@ -27,7 +27,7 @@
         <div class="name">电气火灾检测统计</div>
         <div class="info">
           <span class="info-name"> 设备总数：</span>
-          <span class="number">10</span>
+          <span class="number">70</span>
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name"> 设备异常：</span>
@@ -39,19 +39,19 @@
         </div>
       </div>
       <div class="circular">
-        <div class="name">人员进入情况</div>
+        <div class="name">能耗统计</div>
         <div class="info">
-          <span class="info-name"> 进入人数：</span>
-          <span class="number">78</span>
-          <span>（人）</span>
+          <span class="info-name"> 设备总数：</span>
+          <span class="number">1</span>
+          <span>（个）</span>
           <span class="space"></span>
-          <span class="info-name"> 体温正常：</span>
-          <span class="number1">4</span>
-          <span>（人）</span>
-          <span class="space"></span>
+          <span class="info-name"> 设备异常：</span>
+          <span class="number1">0</span>
+          <span>（个）</span>
+          <!-- <span class="space"></span>
           <span class="info-name"> 体温异常：</span>
           <span class="number1">0</span>
-          <span>（人）</span>
+          <span>（人）</span> -->
         </div>
         <div id="myChart4"
              :style="{width: '860px', height: '230px'}">

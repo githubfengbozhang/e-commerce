@@ -3,6 +3,7 @@
     <div class="icon">
       <i class="iconfont">&#xe67f;</i>
       <i class="iconfont">&#xe637;</i>
+      <img :src="headerImg" />
     </div>
     <div class="title">天下大足电商直播基地智慧管理系统</div>
     <div class="time">{{time}}</div>
@@ -14,8 +15,8 @@ export default {
   name: 'LayHeader',
   data () {
     return {
-      headerImg: require("../../../assets/header/logo1.png"),
-      headerImg1: require("../../../assets/header/sjt.png"),
+      headerImg: require("../../../assets/img/zlj.png"),
+
       time: this.initTime()
     }
   },

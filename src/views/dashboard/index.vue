@@ -4,112 +4,214 @@
       <span>首页</span>
     </div>
     <div class="flex">
-      <div class="circular">
-        <div class="name">设备统计</div>
-        <div class="info">
-          <span class="info-name">设备总数：</span>
-          <span class="number">54</span>
-          <span>（个）</span>
-          <span class="space"></span>
-          <span class="info-name">设备异常：</span>
-          <span class="number1">0</span>
-          <span>（个）</span>
-        </div>
-        <div id="myChart" :style="{width: '860px', height: '230px'}"></div>
-      </div>
-      <div class="circular">
-        <div class="name">人员进入情况</div>
-        <div class="info">
-          <span class="info-name">进入人数：</span>
-          <span class="number">145</span>
-          <span>（人）</span>
-          <!-- <span class="space"></span>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="circular">
+            <div class="name">直播参观人数</div>
+            <div class="info">
+              <span class="info-name">参观总数：</span>
+              <span class="number">1.7k</span>
+              <span>（个）</span>
+            </div>
+            <div id="myChart5"
+                 class="echarts"></div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="circular">
+            <div class="name"
+                 style="margin-bottom: 0px">销售排行榜</div>
+            <div class="classifiy">
+              <div class="blank">
+                <div class="icon">
+                  <i class="iconfont"
+                     style="color:#CCD1D7">&#xe644;</i>
+                </div>
+                <div>
+                  <img :src="img2" />
+                </div>
+              </div>
+              <div class="blank"
+                   style="margin: 0 10px">
+                <div class="icon">
+                  <i class="iconfont"
+                     style="color:#FDD85E">&#xe643;</i>
+                </div>
+                <div>
+                  <img :src="img1" />
+                </div>
+              </div>
+              <div class="blank">
+                <div class="icon">
+                  <i class="iconfont"
+                     style="color:#F5B08B">&#xe641;</i>
+                </div>
+                <div>
+                  <img :src="img3" />
+                </div>
+              </div>
+
+            </div>
+            <div class="classifiy-table">
+              <el-table :data="tableData"
+                        stripe
+                        :row-style="{height:'10px'}"
+                        :cell-style="{padding:'5px 0'}"
+                        :show-header='false'
+                        :row-class-name="tabRowClassName"
+                        style="width: 100%">
+                <el-table-column prop="sort"
+                                 label="日期"
+                                 width="50">
+                </el-table-column>
+                <el-table-column prop="context"
+                                 label="姓名">
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="10">
+          <div class="circular">
+            <div class="name">人员进入情况</div>
+            <div class="info">
+              <span class="info-name">进入人数：</span>
+              <span class="number">{{personObject.clockPersonnum}}</span>
+              <span>（人）</span>
+              <!-- <span class="space"></span>
           <span class="info-name">留存人数：</span>
           <span class="number1">4</span>-->
-          <span>（人）</span>
-          <span class="space"></span>
-          <span class="info-name">体温正常：</span>
-          <span class="number1">4</span>
-          <span>（人）</span>
-          <span class="space"></span>
-          <span class="info-name">体温异常：</span>
-          <span class="number1">0</span>
-          <span>（人）</span>
-        </div>
-        <div id="myChart1" :style="{width: '860px', height: '230px'}"></div>
-      </div>
+              <span>（人）</span>
+              <span class="space"></span>
+              <span class="info-name">体温正常：</span>
+              <span class="number1">{{personObject.clockPersonTempnum}}</span>
+              <span>（人）</span>
+              <span class="space"></span>
+              <span class="info-name">体温异常：</span>
+              <span class="number1">{{personObject.clockPersonAbtempnum}}</span>
+              <span>（人）</span>
+            </div>
+            <div id="myChart1"
+                 class="echarts"></div>
+          </div>
+        </el-col>
+      </el-row>
+
     </div>
     <div class="flex">
-      <div class="circular-max">
-        <div class="text">
-          <div>视频监控</div>
-          <div class="mt10">
-            <span class="name">设备总数：</span>
-            <span class="number">6</span>
-            <span>(个)</span>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="circular-sale">
+            <p class="title">当天销售总额</p>
+            <p class="number"> 2,545,865(元)</p>
           </div>
-          <div class="mt10">
-            <span class="name">设备异常：</span>
-            <span class="number">6</span>
-            <span>(个)</span>
+        </el-col>
+        <el-col :span="16">
+          <div class="circular-max">
+            <div class="text">
+              <div>视频监控</div>
+              <div class="mt10">
+                <span class="name">设备总数：</span>
+                <span class="number">68</span>
+                <span>(个)</span>
+              </div>
+              <div class="mt10">
+                <span class="name">设备异常：</span>
+                <span class="number">0</span>
+                <span>(个)</span>
+              </div>
+              <div class="mt0">
+                <span class="open">开：5</span>
+                <span class="close">关：0</span>
+              </div>
+            </div>
+            <div class="vide">
+              <DialogVideo v-for="(item,index) in videoList"
+                           :key="index"
+                           :propsVideo="item" />
+            </div>
           </div>
-          <div class="mt0">
-            <span class="open">开：5</span>
-            <span class="close">关：0</span>
-          </div>
-        </div>
-        <div class="vide">
-          <DialogVideo v-for="(item,index) in videoList" :key="index" :propsVideo="item" />
-        </div>
-      </div>
+        </el-col>
+      </el-row>
+
     </div>
     <div class="flex mt20">
-      <div class="circular">
-        <div class="name">电气火灾检测统计</div>
-        <div class="info">
-          <span class="info-name">设备总数：</span>
-          <span class="number">145</span>
-          <span>（个）</span>
-          <span class="space"></span>
-          <span class="info-name">设备异常：</span>
-          <span class="number1">0</span>
-          <span>（个）</span>
-        </div>
-        <div id="myChart3" :style="{width: '860px', height: '250px'}"></div>
-      </div>
-      <div class="circular">
-        <div class="name">能耗统计</div>
-        <div class="info">
-          <span class="info-name">设备总数：</span>
-          <span class="number">145</span>
-          <span>（个）</span>
-          <span class="space"></span>
-          <span class="info-name">设备总数：</span>
-          <span class="number1">4</span>
-          <span>（个）</span>
-          <span class="space"></span>
-          <span class="info-name">开：</span>
-          <span class="number">4</span>
-          <span class="space"></span>
-          <span class="info-name">关：</span>
-          <span class="number">3</span>
-        </div>
-        <div id="myChart4" :style="{width: '860px', height: '250px'}"></div>
-      </div>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="circular">
+            <div class="name">电气火灾检测统计</div>
+            <div class="info">
+              <span class="info-name">设备总数：</span>
+              <span class="number">1</span>
+              <span>（个）</span>
+              <span class="space"></span>
+              <span class="info-name">设备异常：</span>
+              <span class="number1">0</span>
+              <span>（个）</span>
+            </div>
+            <div id="myChart3"
+                 class="echarts"></div>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="circular">
+            <div class="name">设备统计</div>
+            <div class="info">
+              <span class="info-name">设备总数：</span>
+              <span class="number">70</span>
+              <span>（个）</span>
+              <span class="space"></span>
+              <span class="info-name">设备异常：</span>
+              <span class="number1">0</span>
+              <span>（个）</span>
+            </div>
+            <div id="myChart"
+                 class="echarts"></div>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="circular">
+            <div class="name">能耗统计</div>
+            <div class="info">
+              <span class="info-name">设备总数：</span>
+              <span class="number">1</span>
+              <span>（个）</span>
+              <span class="space"></span>
+              <span class="info-name">设备总数：</span>
+              <span class="number1">0</span>
+              <span>（个）</span>
+              <span class="space"></span>
+              <span class="open">开：5</span>
+              <span class="close">关：0</span>
+            </div>
+            <div id="myChart4"
+                 class="echarts"></div>
+          </div>
+        </el-col>
+      </el-row>
+
     </div>
   </div>
 </template>
 <script>
 import DialogVideo from "../../components/DialogVideo/index.vue";
 import axios from "axios";
+import {
+  todayFaceQuery,
+  faceQuery,
+  hisFaceTempDateQuery
+} from "../../api/accessManger";
 
 export default {
   name: "dashboard",
   components: {
     DialogVideo
   },
-  data() {
+  data () {
     return {
+      img1: require('../../assets/img/one.png'),
+      img2: require('../../assets/img/two.png'),
+      img3: require('../../assets/img/three.png'),
       videoList: [
         {
           url: "A010102-00008",
@@ -132,17 +234,48 @@ export default {
           id: 2
         }
       ],
-      list: []
+      list: [],
+      tableData: [],
+      personObject: {
+        clockPersonnum: "",
+        clockPersonTempnum: "",
+        clockPersonAbtempnum: ""
+      },
     };
   },
-  mounted() {
+  mounted () {
     // this.init();
+    this.personStatistics();
     this.drawLine();
     this.drawLine1();
     this.drawLine2();
     this.drawLine3();
+    this.drawLine4();
+    // 销售排行榜table的数据
+    this.loadTableData();
   },
   methods: {
+    personStatistics () {
+      let that = this;
+      todayFaceQuery().then(res => {
+        const {
+          clockPersonnum,
+          clockPersonTempnum,
+          clockPersonAbtempnum
+        } = res.data;
+        that.personObject.clockPersonnum = clockPersonnum;
+        that.personObject.clockPersonTempnum = clockPersonTempnum;
+        that.personObject.clockPersonAbtempnum = clockPersonAbtempnum;
+      });
+    },
+    tabRowClassName (row, rowIndex) {
+      let index = rowIndex;
+      if (index % 2 == 0) {
+        return 'two-row'
+      } else {
+        return 'one-row'
+      }
+    },
     // clickVideo(video) {
     //   debugger;
 
@@ -171,8 +304,16 @@ export default {
     //       }
     //     });
     // },
-
-    drawLine() {
+    loadTableData () {
+      let that = this
+      axios.get('/data/ranking.json').then(res => {
+        that.tableData = res.data.list
+        console.log(that.tableData)
+      }).catch(err => {
+        alert("抱歉，服务出错！")
+      })
+    },
+    drawLine () {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart"));
       // 绘制图表
@@ -185,7 +326,7 @@ export default {
           right: "2%"
         },
         xAxis: {
-          data: ["视频", "电气火灾", "门禁", "电梯", "监控", "闸机"],
+          data: ["视频", "电气火灾", "门禁", "电梯", "闸机"],
           axisLabel: {
             show: true,
             textStyle: {
@@ -215,7 +356,7 @@ export default {
           {
             name: "销量",
             type: "bar",
-            data: [5, 20, 36, 10, 10, 20],
+            data: [68, 1, 1, 0, 0, 0],
             itemStyle: {
               normal: {
                 label: {
@@ -244,7 +385,7 @@ export default {
         ]
       });
     },
-    drawLine1() {
+    drawLine1 () {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart1"));
       // 绘制图表
@@ -258,18 +399,9 @@ export default {
         },
         xAxis: {
           data: [
-            "6月01日",
-            "6月02日",
-            "6月03日",
-            "6月04日",
-            "6月05日",
-            "6月06日",
-            "6月07日",
-            "6月08日",
-            "6月09日",
-            "6月10日",
-            "6月11日",
-            "6月12日"
+            "6月18日",
+            "6月19日",
+            "6月20日",
           ],
           axisLabel: {
             show: true,
@@ -355,7 +487,7 @@ export default {
         ]
       });
     },
-    drawLine2() {
+    drawLine2 () {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart3"));
       // 绘制图表
@@ -369,18 +501,9 @@ export default {
         },
         xAxis: {
           data: [
-            "6月01日",
-            "6月02日",
-            "6月03日",
-            "6月04日",
-            "6月05日",
-            "6月06日",
-            "6月07日",
-            "6月08日",
-            "6月09日",
-            "6月10日",
-            "6月11日",
-            "6月12日"
+            "6月18日",
+            "6月19日",
+            "6月20日"
           ],
           axisLabel: {
             show: true,
@@ -412,7 +535,7 @@ export default {
             name: "销量",
             type: "bar",
             barWidth: 10, // 柱状粗细
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20],
+            data: [0, 0, 0],
             label: {
               show: true,
               position: "top",
@@ -439,7 +562,7 @@ export default {
         ]
       });
     },
-    drawLine3() {
+    drawLine3 () {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart4"));
       // 绘制图表
@@ -453,18 +576,9 @@ export default {
         },
         xAxis: {
           data: [
-            "6月01日",
-            "6月02日",
-            "6月03日",
-            "6月04日",
-            "6月05日",
-            "6月06日",
-            "6月07日",
-            "6月08日",
-            "6月09日",
-            "6月10日",
-            "6月11日",
-            "6月12日"
+            "6月18日",
+            "6月19日",
+            "6月20日"
           ],
           axisLabel: {
             show: true,
@@ -496,7 +610,7 @@ export default {
             name: "销量",
             type: "bar",
             barWidth: 2, // 柱状粗细
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20],
+            data: [],
             label: {
               show: true,
               position: "top",
@@ -545,11 +659,86 @@ export default {
 
               // }
             },
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20]
+            data: [3, 3, 4]
           }
         ]
       });
-    }
+    },
+    drawLine4 () {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("myChart5"));
+      // 绘制图表
+      myChart.setOption({
+        tooltip: {},
+        grid: {
+          top: "10%",
+          bottom: "25%", //也可设置left和right设置距离来控制图表的大小
+          left: "5%",
+          right: "2%"
+        },
+        xAxis: {
+          data: [
+            "6月18日",
+            "6月19日",
+            "6月20日"
+          ],
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: "rgba(186,210,242,1)" //X轴文字颜色
+            }
+          }
+        },
+        yAxis: {
+          type: "value",
+          splitLine: {
+            show: false
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: "rgba(186,210,242,1)"
+            }
+          },
+          splitArea: {
+            show: true,
+            areaStyle: {
+              color: ["rgba(2,17,37,0.5)", "rgba(15,42,82,1)"]
+            }
+          }
+        },
+        series: [
+          {
+            name: "销量",
+            type: "bar",
+            barWidth: 10, // 柱状粗细
+            data: [500, 550, 650],
+            label: {
+              show: true,
+              position: "top",
+              textStyle: {
+                color: "rgba(186,210,242,1)"
+              }
+            },
+            itemStyle: {
+              normal: {
+                // 渐变 柱状
+                color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "rgba(123,106,239,1)"
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(51,108,241,1)"
+                  }
+                ])
+              }
+            }
+          }
+        ]
+      });
+    },
   }
 };
 </script>

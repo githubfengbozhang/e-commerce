@@ -11,10 +11,6 @@
           <span class="number">{{personObject.clockPersonnum}}</span>
           <span>（人）</span>
           <span class="space"></span>
-          <span class="info-name">人员留存：</span>
-          <span class="number1">4</span>
-          <span>（人）</span>
-          <span class="space"></span>
           <span class="info-name">体温正常：</span>
           <span class="number2">{{personObject.clockPersonTempnum}}</span>
           <span>（人）</span>
