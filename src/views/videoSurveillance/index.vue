@@ -8,7 +8,7 @@
         <div class="name">视频监控</div>
         <div class="info">
           <span class="info-name">设备总数：</span>
-          <span class="number">40</span>
+          <span class="number">68</span>
           <span>（个）</span>
           <span class="space"></span>
           <span class="info-name">设备异常：</span>

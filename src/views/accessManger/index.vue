@@ -12,7 +12,7 @@
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温正常：</span>
-          <span class="number2">{{personObject.clockPersonTempnum}}</span>
+          <span class="number">{{personObject.clockPersonTempnum}}</span>
           <span>（人）</span>
           <span class="space"></span>
           <span class="info-name">体温异常：</span>
@@ -29,11 +29,11 @@
             <div class="name">体温检测统计</div>
             <div class="info">
               <span class="info-name">体温正常：</span>
-              <span class="number">22</span>
+              <span class="number">{{temperature.number[0]}}</span>
               <span>（人）</span>
               <span class="space"></span>
               <span class="info-name">体温异常：</span>
-              <span class="number1">0</span>
+              <span class="number1">{{temperature.number1[0]}}</span>
               <span>（人）</span>
             </div>
             <div id="myChart3"
@@ -45,12 +45,9 @@
             <div class="name">人员进入统计</div>
             <div class="info">
               <span class="info-name">进入人数：</span>
-              <span class="number">12</span>
+              <span class="number">{{personObject.clockPersonnum}}</span>
               <span>（人）</span>
               <span class="space"></span>
-              <span class="info-name">留存人数：</span>
-              <span class="number1">4</span>
-              <span>（人）</span>
             </div>
             <div id="myChart4"
                  :style="{width: '100%', height:' 70%'}"></div>
@@ -112,7 +109,8 @@
 import {
   todayFaceQuery,
   faceQuery,
-  hisFaceTempDateQuery
+  hisFaceTempDateQuery,
+  todayFaceDateQuery
 } from "../../api/accessManger";
 
 export default {
@@ -133,6 +131,15 @@ export default {
       params: {
         currentPage: 1,
         pageSize: 5
+      },
+      temperature: {
+        time: [],
+        number: [],
+        number1: []
+      },
+      personEchartsStatistics: {
+        time: [],
+        number: []
       }
     };
   },
@@ -145,7 +152,8 @@ export default {
     }, 5000);
     this.drawLine2();
     this.drawLine3();
-    this.hisFaceTempDateQuery();
+    this.todayFaceDateQuery();
+    this.hisFaceTempDateQuery()
   },
   methods: {
     //==================================接口请求===============================
@@ -169,7 +177,8 @@ export default {
         that.otherObjct.total = res.total;
       });
     },
-    hisFaceTempDateQuery () {
+    todayFaceDateQuery () {
+      let that = this;
       let time = new Date();
       let year = time.getFullYear();
       let month =
@@ -178,7 +187,229 @@ export default {
           : `0${time.getMonth() + 1}`;
       let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
       const dataStar = `${year}-${month}-${day}`;
-      faceQuery({ dataStar }).then(res => {
+      todayFaceDateQuery({ dataStar }).then(res => {
+        res.data.map(item => {
+
+          that.personEchartsStatistics.time.push(item.clockPersondate);
+          that.personEchartsStatistics.number.push(item.clockPersonnum);
+        })
+
+        let myChart = that.$echarts.init(document.getElementById("myChart4"));
+        myChart.setOption({
+          tooltip: {},
+          grid: {
+            top: "10%",
+            bottom: "25%", //也可设置left和right设置距离来控制图表的大小
+            left: "5%",
+            right: "2%"
+          },
+          xAxis: {
+            data: that.personEchartsStatistics.time,
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "rgba(186,210,242,1)" //X轴文字颜色
+              }
+            }
+          },
+          yAxis: {
+            type: "value",
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "rgba(186,210,242,1)"
+              }
+            },
+            splitArea: {
+              show: true,
+              areaStyle: {
+                color: ["rgba(2,17,37,0.5)", "rgba(15,42,82,1)"]
+              }
+            }
+          },
+          series: [
+            {
+              name: "温度",
+              type: "bar",
+              barWidth: 10, // 柱状粗细
+              data: that.personEchartsStatistics.number,
+              label: {
+                show: true,
+                position: "top",
+                textStyle: {
+                  color: "rgba(186,210,242,1)"
+                }
+              },
+              itemStyle: {
+                normal: {
+                  // 渐变 柱状
+                  color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "rgba(123,106,239,1)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(51,108,241,1)"
+                    }
+                  ])
+                }
+              }
+            },
+            {
+              name: "折线",
+              type: "line",
+              smooth: false, //折点是圆弧状的
+              // showSymbol: true,
+              showAllSymbol: true,
+              symbol: "circle", //折点设定为实心点
+              symbolSize: 10, //设定实心点的大小
+              itemStyle: {
+                /*设置折线颜色*/
+                color: "rgba(120,106,239,1)",
+                borderColor: "#fff",
+                borderWidth: 3,
+                shadowColor: "rgba(0, 0, 0, .3)",
+                shadowBlur: 0,
+                shadowOffsetY: 2,
+                shadowOffsetX: 2
+                // normal: {
+                //   // color: '#fc8a0f', //折点颜色
+                //   lineStyle: {
+                //     color: 'rgba(120,106,239,1)' //折线颜色
+                //   }
+
+                // }
+              },
+              data: that.personEchartsStatistics.number,
+            }
+          ]
+        })
+        //  res.data.records
+      });
+    },
+    hisFaceTempDateQuery () {
+      let that = this;
+      let time = new Date();
+      let year = time.getFullYear();
+      let month =
+        time.getMonth() + 1 > 9
+          ? time.getMonth() + 1
+          : `0${time.getMonth() + 1}`;
+      let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
+      const dataStar = `${year}-${month}-${day}`;
+      hisFaceTempDateQuery({ dataStar }).then(res => {
+        res.data.map(item => {
+
+          // return `${month}月${day}日`;
+          that.temperature.time.push(item.clockPersondate)
+          that.temperature.number.push(item.personNormalnum)
+          that.temperature.number1.push(item.personAlarnum)
+        })
+
+
+
+
+
+
+        let myChart = that.$echarts.init(document.getElementById("myChart3"));
+        myChart.setOption({
+          tooltip: {},
+          grid: {
+            top: "10%",
+            bottom: "25%", //也可设置left和right设置距离来控制图表的大小
+            left: "5%",
+            right: "2%"
+          },
+          xAxis: {
+            data: that.temperature.time,
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "rgba(186,210,242,1)" //X轴文字颜色
+              }
+            }
+          },
+          yAxis: {
+            type: "value",
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: "rgba(186,210,242,1)"
+              }
+            },
+            splitArea: {
+              show: true,
+              areaStyle: {
+                color: ["rgba(2,17,37,0.5)", "rgba(15,42,82,1)"]
+              }
+            }
+          },
+          series: [
+            {
+              name: "人",
+              type: "bar",
+              barWidth: 10, // 柱状粗细
+              data: that.temperature.number,
+              label: {
+                show: true,
+                position: "top",
+                textStyle: {
+                  color: "rgba(186,210,242,1)"
+                }
+              },
+              itemStyle: {
+                normal: {
+                  // 渐变 柱状
+                  color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "rgba(123,106,239,1)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(51,108,241,1)"
+                    }
+                  ])
+                }
+              }
+            },
+            {
+              name: "人",
+              type: "bar",
+              barWidth: 10, // 柱状粗细
+              data: that.temperature.number1,
+              label: {
+                show: true,
+                position: "top",
+                textStyle: {
+                  color: "rgba(186,210,242,1)"
+                }
+              },
+              itemStyle: {
+                normal: {
+                  // 渐变 柱状
+                  color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "rgba(123,106,239,1)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(51,108,241,1)"
+                    }
+                  ])
+                }
+              }
+            },
+          ]
+        })
         //  res.data.records
       });
     },
@@ -295,20 +526,7 @@ export default {
           right: "2%"
         },
         xAxis: {
-          data: [
-            "6月01日",
-            "6月02日",
-            "6月03日",
-            "6月04日",
-            "6月05日",
-            "6月06日",
-            "6月07日",
-            "6月08日",
-            "6月09日",
-            "6月10日",
-            "6月11日",
-            "6月12日"
-          ],
+          data: this.personEchartsStatistics.time,
           axisLabel: {
             show: true,
             textStyle: {
@@ -330,7 +548,7 @@ export default {
           splitArea: {
             show: true,
             areaStyle: {
-              color: ["#162D75", "#15296D"]
+              color: ["rgba(2,17,37,0.5)", "rgba(15,42,82,1)"]
             }
           }
         },
@@ -338,8 +556,8 @@ export default {
           {
             name: "销量",
             type: "bar",
-            barWidth: 2, // 柱状粗细
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20],
+            barWidth: 10, // 柱状粗细
+            data: this.personEchartsStatistics.number,
             label: {
               show: true,
               position: "top",
@@ -388,7 +606,7 @@ export default {
 
               // }
             },
-            data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20]
+            data: this.personEchartsStatistics.number,
           }
         ]
       });

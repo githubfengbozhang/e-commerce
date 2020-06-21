@@ -29,7 +29,7 @@
                      style="color:#CCD1D7">&#xe644;</i>
                 </div>
                 <div>
-                  <img :src="img2" />
+                  <div class="sort">2</div>
                 </div>
               </div>
               <div class="blank"
@@ -39,7 +39,8 @@
                      style="color:#FDD85E">&#xe643;</i>
                 </div>
                 <div>
-                  <img :src="img1" />
+                  <div class="sort1"
+                       style="background: #FDD85E;">1</div>
                 </div>
               </div>
               <div class="blank">
@@ -48,10 +49,16 @@
                      style="color:#F5B08B">&#xe641;</i>
                 </div>
                 <div>
-                  <img :src="img3" />
+                  <div class="sort"
+                       style="background:#F5B08B;">3</div>
                 </div>
               </div>
 
+            </div>
+            <div class="classifiy-title">
+              <div class="sort-text">{{tableData[1]?tableData[1].phb:''}}</div>
+              <div class="sort-text">{{tableData[0]?tableData[0].phb:''}}</div>
+              <div class="sort-text">{{tableData[2]?tableData[2].phb:''}}</div>
             </div>
             <div class="classifiy-table">
               <el-table :data="tableData"
@@ -90,7 +97,7 @@
               <!-- <span class="space"></span>
           <span class="info-name">留存人数：</span>
           <span class="number1">4</span>-->
-              <span>（人）</span>
+              <!-- <span>（人）</span> -->
               <span class="space"></span>
               <span class="info-name">体温正常：</span>
               <span class="number1">{{personObject.clockPersonTempnum}}</span>
@@ -220,7 +227,7 @@ import FormDialog from "./components/index.vue"
 import {
   todayFaceQuery,
   faceQuery,
-  hisFaceTempDateQuery
+  todayFaceDateQuery
 } from "../../api/accessManger";
 
 export default {
@@ -275,7 +282,7 @@ export default {
   mounted () {
     // this.init();
     this.personStatistics();
-    this.hisFaceTempDateQuery()
+    this.todayFaceDateQuery()
     this.drawLine();
     this.drawLine1();
     this.drawLine2();
@@ -309,7 +316,7 @@ export default {
     openDialog () {
       this.dialogVisible = true
     },
-    hisFaceTempDateQuery () {
+    todayFaceDateQuery () {
       let that = this;
       let time = new Date();
       let year = time.getFullYear();
@@ -319,43 +326,12 @@ export default {
           : `0${time.getMonth() + 1}`;
       let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
       const dataStar = `${year}-${month}-${day}`;
-      faceQuery({ dataStar }).then(res => {
-        res.data.records.map(item => {
-          const time = new Date(item.dataTime);
-          let month =
-            time.getMonth() + 1 > 9
-              ? time.getMonth() + 1
-              : `0${time.getMonth() + 1}`;
-          let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
-          // return `${month}月${day}日`;
-          that.temperature.time.push(`${month}月${day}日`)
+      todayFaceDateQuery({ dataStar }).then(res => {
+        res.data.map(item => {
+
+          that.temperature.time.push(item.clockPersondate);
+          that.temperature.number.push(item.clockPersonnum);
         })
-        const temperatureTime = new Set(that.temperature.time);
-        that.temperature.time = Array.from(temperatureTime);
-
-        let list = res.data.records.map(item => {
-          const time = new Date(item.dataTime);
-          let month =
-            time.getMonth() + 1 > 9
-              ? time.getMonth() + 1
-              : `0${time.getMonth() + 1}`;
-          let day = time.getDate() > 9 ? time.getDate() : `0${time.getDate()}`;
-          item.time = `${month}月${day}日`;
-          return item;
-        })
-        let obj = {}
-        that.temperature.time.map(item => {
-          obj[item] = []
-          list.map(item1 => {
-            if (item1.time === item) {
-              obj[item].push(item1);
-            }
-          })
-          that.temperature.number.push(obj[item].length)
-        })
-
-
-
 
         let myChart = that.$echarts.init(document.getElementById("myChart1"));
         myChart.setOption({
