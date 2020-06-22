@@ -291,8 +291,8 @@ export default {
     // 销售排行榜table的数据
     // this.loadTableData();
     this.zje = this.toThousands(localStorage.getItem('zje'));
-    this.tableData = JSON.parse(window.localStorage.getItem('phbList'));
-    if (JSON.parse(window.localStorage.getItem('broadcastNumber')).length > 0) {
+    this.tableData = JSON.parse(window.localStorage.getItem('phbList')) || [];
+    if ( window.localStorage.getItem('broadcastNumber') && JSON.parse(window.localStorage.getItem('broadcastNumber')).length > 0) {
       this.countPerson = JSON.parse(window.localStorage.getItem('broadcastNumber')).reduce((total, num) => {
         return parseInt(total) + parseInt(num);
       })

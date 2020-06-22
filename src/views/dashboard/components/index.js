@@ -50,7 +50,6 @@ export default {
     }
   },
   mounted () {
-    debugger
     if (JSON.parse(window.localStorage.getItem('broadcast'))) {
       this.form.broadcast = JSON.parse(window.localStorage.getItem('broadcast'))
     }
